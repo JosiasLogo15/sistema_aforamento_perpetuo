@@ -7,12 +7,13 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.JPasswordField;
 
 public class telaLoginVIEW {
 
 	private JFrame frmLogin;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField txtNome;
+	private JPasswordField psswdSenha;
 
 	/**
 	 * Launch the application.
@@ -57,24 +58,23 @@ public class telaLoginVIEW {
 		lblNewLabel_1.setBounds(25, 97, 59, 14);
 		frmLogin.getContentPane().add(lblNewLabel_1);
 		
-		textField = new JTextField();
-		textField.setBounds(94, 96, 190, 20);
-		frmLogin.getContentPane().add(textField);
-		textField.setColumns(10);
+		txtNome = new JTextField();
+		txtNome.setBounds(94, 96, 190, 20);
+		frmLogin.getContentPane().add(txtNome);
+		txtNome.setColumns(10);
 		
 		JLabel lblNewLabel_2 = new JLabel("Senha:");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblNewLabel_2.setBounds(25, 168, 59, 14);
 		frmLogin.getContentPane().add(lblNewLabel_2);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(94, 167, 190, 20);
-		frmLogin.getContentPane().add(textField_1);
-		textField_1.setColumns(10);
+		JButton btnEntrar = new JButton("ENTRAR");
+		btnEntrar.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnEntrar.setBounds(113, 234, 124, 29);
+		frmLogin.getContentPane().add(btnEntrar);
 		
-		JButton btnNewButton = new JButton("ENTRAR");
-		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnNewButton.setBounds(113, 234, 124, 29);
-		frmLogin.getContentPane().add(btnNewButton);
+		psswdSenha = new JPasswordField();
+		psswdSenha.setBounds(94, 167, 190, 20);
+		frmLogin.getContentPane().add(psswdSenha);
 	}
 }

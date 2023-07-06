@@ -62,19 +62,19 @@ public class telaMainVIEW {
 		mnCadastro.setFont(new Font("Segoe UI", Font.BOLD, 14));
 		menuBar.add(mnCadastro);
 		
-		JMenuItem mntmCemiterio = new JMenuItem("Cadastro de Cemitério");
-		mntmCemiterio.addActionListener(new ActionListener() {
+		JMenuItem mntmCadastroCemiterio = new JMenuItem("Cadastro de Cemitério");
+		mntmCadastroCemiterio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 			}
 		});
-		mnCadastro.add(mntmCemiterio);
+		mnCadastro.add(mntmCadastroCemiterio);
 		
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Cadastro de Prefeito");
-		mnCadastro.add(mntmNewMenuItem_1);
+		JMenuItem mntmCadastroPrefeito = new JMenuItem("Cadastro de Prefeito");
+		mnCadastro.add(mntmCadastroPrefeito);
 		
-		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Cadastro de Usuário");
-		mnCadastro.add(mntmNewMenuItem_2);
+		JMenuItem mntmCadastroUsuario = new JMenuItem("Cadastro de Usuário");
+		mnCadastro.add(mntmCadastroUsuario);
 		
 		JMenu mnProcessos = new JMenu("Processos");
 		mnProcessos.setFont(new Font("Segoe UI", Font.BOLD, 14));
@@ -109,16 +109,14 @@ public class telaMainVIEW {
 		frmMenuPrincipal.getContentPane().add(lblNewLabel);
 		
 		txtNomeUsuario = new JTextField();
-		txtNomeUsuario.setText("Usuario Logado");
-		txtNomeUsuario.setEnabled(false);
 		txtNomeUsuario.setEditable(false);
+		txtNomeUsuario.setText("Usuario Logado");
 		txtNomeUsuario.setBounds(0, 405, 177, 20);
 		frmMenuPrincipal.getContentPane().add(txtNomeUsuario);
 		txtNomeUsuario.setColumns(10);
 		
 		txtData = new JTextField();
 		txtData.setText("Data");
-		txtData.setEnabled(false);
 		txtData.setEditable(false);
 		txtData.setBounds(362, 405, 118, 20);
 		frmMenuPrincipal.getContentPane().add(txtData);
@@ -126,7 +124,6 @@ public class telaMainVIEW {
 		
 		txtHora = new JTextField();
 		txtHora.setText("Hora");
-		txtHora.setEnabled(false);
 		txtHora.setEditable(false);
 		txtHora.setBounds(479, 405, 111, 20);
 		frmMenuPrincipal.getContentPane().add(txtHora);
@@ -134,14 +131,12 @@ public class telaMainVIEW {
 		
 		txtSite = new JTextField();
 		txtSite.setEditable(false);
-		txtSite.setEnabled(false);
 		txtSite.setText("Site Prefeitura");
 		txtSite.setBounds(589, 405, 150, 20);
 		frmMenuPrincipal.getContentPane().add(txtSite);
 		txtSite.setColumns(10);
 		
 		txtVersao = new JTextField();
-		txtVersao.setEnabled(false);
 		txtVersao.setEditable(false);
 		txtVersao.setText("info versão");
 		txtVersao.setBounds(738, 405, 165, 20);
@@ -155,7 +150,6 @@ public class telaMainVIEW {
 		
 		txtNivel = new JTextField();
 		txtNivel.setText("nivel de acesso");
-		txtNivel.setEnabled(false);
 		txtNivel.setEditable(false);
 		txtNivel.setBounds(176, 405, 187, 20);
 		frmMenuPrincipal.getContentPane().add(txtNivel);

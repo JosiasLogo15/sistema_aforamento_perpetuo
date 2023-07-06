@@ -12,8 +12,8 @@ import javax.swing.JButton;
 public class telaCadastroUsuario {
 
 	private JFrame frmCadastroDeUsurio;
-	private JTextField textField;
-	private JPasswordField passwordField;
+	private JTextField txtNome;
+	private JPasswordField psswdSenha;
 
 	/**
 	 * Launch the application.
@@ -53,19 +53,19 @@ public class telaCadastroUsuario {
 		lblNewLabel.setBounds(10, 55, 46, 14);
 		frmCadastroDeUsurio.getContentPane().add(lblNewLabel);
 		
-		textField = new JTextField();
-		textField.setBounds(65, 54, 142, 20);
-		frmCadastroDeUsurio.getContentPane().add(textField);
-		textField.setColumns(10);
+		txtNome = new JTextField();
+		txtNome.setBounds(65, 54, 142, 20);
+		frmCadastroDeUsurio.getContentPane().add(txtNome);
+		txtNome.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("Senha:");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblNewLabel_1.setBounds(10, 131, 48, 14);
 		frmCadastroDeUsurio.getContentPane().add(lblNewLabel_1);
 		
-		passwordField = new JPasswordField();
-		passwordField.setBounds(65, 128, 142, 20);
-		frmCadastroDeUsurio.getContentPane().add(passwordField);
+		psswdSenha = new JPasswordField();
+		psswdSenha.setBounds(65, 128, 142, 20);
+		frmCadastroDeUsurio.getContentPane().add(psswdSenha);
 		
 		JButton btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.setBounds(73, 183, 89, 23);

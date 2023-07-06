@@ -23,7 +23,7 @@ import javax.swing.JButton;
 public class telaCadastroPrefeito {
 
 	private JFrame frmCadastroPrefeito;
-	private JTextField textField;
+	private JTextField txtNome;
 	private JTable table;
 
 	/**
@@ -64,18 +64,18 @@ public class telaCadastroPrefeito {
 		lblNewLabel.setBounds(27, 27, 60, 28);
 		frmCadastroPrefeito.getContentPane().add(lblNewLabel);
 		
-		textField = new JTextField();
-		textField.setBounds(80, 33, 268, 20);
-		frmCadastroPrefeito.getContentPane().add(textField);
-		textField.setColumns(10);
+		txtNome = new JTextField();
+		txtNome.setBounds(80, 33, 268, 20);
+		frmCadastroPrefeito.getContentPane().add(txtNome);
+		txtNome.setColumns(10);
 		
-		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.getCalendarButton().addActionListener(new ActionListener() {
+		JDateChooser dataInicio = new JDateChooser();
+		dataInicio.getCalendarButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		dateChooser.setBounds(142, 79, 125, 20);
-		frmCadastroPrefeito.getContentPane().add(dateChooser);
+		dataInicio.setBounds(142, 79, 125, 20);
+		frmCadastroPrefeito.getContentPane().add(dataInicio);
 		
 		JLabel lblNewLabel_1 = new JLabel("Inicio da Gestão:");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -87,9 +87,9 @@ public class telaCadastroPrefeito {
 		lblNewLabel_1_1.setBounds(21, 133, 116, 14);
 		frmCadastroPrefeito.getContentPane().add(lblNewLabel_1_1);
 		
-		JDateChooser dateChooser_1 = new JDateChooser();
-		dateChooser_1.setBounds(142, 132, 125, 20);
-		frmCadastroPrefeito.getContentPane().add(dateChooser_1);
+		JDateChooser dataFinal = new JDateChooser();
+		dataFinal.setBounds(142, 132, 125, 20);
+		frmCadastroPrefeito.getContentPane().add(dataFinal);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 223, 350, 137);

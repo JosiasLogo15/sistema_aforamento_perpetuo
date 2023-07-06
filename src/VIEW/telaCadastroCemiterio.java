@@ -14,9 +14,9 @@ import javax.swing.JScrollPane;
 public class telaCadastroCemiterio {
 
 	private JFrame frmCadastroDeCemitrios;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField txtNome;
+	private JTextField txtEndereco;
+	private JTextField txtBairro;
 	private JTable table;
 	private JButton btnCadastrar;
 	private JButton btnExcluir;
@@ -61,30 +61,30 @@ public class telaCadastroCemiterio {
 		lblNomeCemiterio.setBounds(10, 42, 52, 14);
 		frmCadastroDeCemitrios.getContentPane().add(lblNomeCemiterio);
 		
-		textField = new JTextField();
-		textField.setBounds(66, 41, 404, 20);
-		frmCadastroDeCemitrios.getContentPane().add(textField);
-		textField.setColumns(10);
+		txtNome = new JTextField();
+		txtNome.setBounds(66, 41, 404, 20);
+		frmCadastroDeCemitrios.getContentPane().add(txtNome);
+		txtNome.setColumns(10);
 		
 		JLabel lblEndereco = new JLabel("Endereço:");
 		lblEndereco.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblEndereco.setBounds(10, 95, 70, 14);
 		frmCadastroDeCemitrios.getContentPane().add(lblEndereco);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(87, 94, 383, 20);
-		frmCadastroDeCemitrios.getContentPane().add(textField_1);
-		textField_1.setColumns(10);
+		txtEndereco = new JTextField();
+		txtEndereco.setBounds(87, 94, 383, 20);
+		frmCadastroDeCemitrios.getContentPane().add(txtEndereco);
+		txtEndereco.setColumns(10);
 		
 		JLabel lblBairro = new JLabel("Bairro:");
 		lblBairro.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblBairro.setBounds(10, 149, 52, 14);
 		frmCadastroDeCemitrios.getContentPane().add(lblBairro);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(66, 148, 404, 20);
-		frmCadastroDeCemitrios.getContentPane().add(textField_2);
-		textField_2.setColumns(10);
+		txtBairro = new JTextField();
+		txtBairro.setBounds(66, 148, 404, 20);
+		frmCadastroDeCemitrios.getContentPane().add(txtBairro);
+		txtBairro.setColumns(10);
 		
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 239, 569, 103);
@@ -116,7 +116,7 @@ public class telaCadastroCemiterio {
 		btnCadastrar.setBounds(10, 192, 89, 23);
 		frmCadastroDeCemitrios.getContentPane().add(btnCadastrar);
 		
-		btnExcluir = new JButton("Deletar");
+		btnExcluir = new JButton("Excluir");
 		btnExcluir.setBounds(109, 192, 89, 23);
 		frmCadastroDeCemitrios.getContentPane().add(btnExcluir);
 		
