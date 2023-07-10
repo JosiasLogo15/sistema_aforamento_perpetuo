@@ -1,12 +1,14 @@
 package Model;
 
+import java.util.Date;
+
 public class Processo {
 
 	private int numeroProcesso;
 	private String requerente;
 	private String medida;
 	private String falecido;
-	private String dataEntrada;
+	private Date dataEntrada;
 	private String endereco;
 	private String bairro;
 	private String quadra;
@@ -42,10 +44,10 @@ public class Processo {
 	public void setFalecido(String falecido) {
 		this.falecido = falecido;
 	}
-	public String getDataEntrada() {
+	public Date getDataEntrada() {
 		return dataEntrada;
 	}
-	public void setDataEntrada(String dataEntrada) {
+	public void setDataEntrada(Date dataEntrada) {
 		this.dataEntrada = dataEntrada;
 	}
 	public String getEndereco() {

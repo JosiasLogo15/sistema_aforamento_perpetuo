@@ -6,14 +6,20 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
+
+import Controller.loginController;
+
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class telaLoginVIEW {
 
 	private JFrame frmLogin;
 	private JTextField txtNome;
 	private JPasswordField psswdSenha;
+	private loginController controller;
 
 	/**
 	 * Launch the application.
@@ -36,6 +42,7 @@ public class telaLoginVIEW {
 	 */
 	public telaLoginVIEW() {
 		initialize();
+		controller = new loginController(this);
 	}
 
 	/**
@@ -69,6 +76,11 @@ public class telaLoginVIEW {
 		frmLogin.getContentPane().add(lblNewLabel_2);
 		
 		JButton btnEntrar = new JButton("ENTRAR");
+		btnEntrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		btnEntrar.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnEntrar.setBounds(113, 234, 124, 29);
 		frmLogin.getContentPane().add(btnEntrar);
@@ -76,5 +88,21 @@ public class telaLoginVIEW {
 		psswdSenha = new JPasswordField();
 		psswdSenha.setBounds(94, 167, 190, 20);
 		frmLogin.getContentPane().add(psswdSenha);
+	}
+	
+	public JTextField getTxtNome() {
+		return txtNome;
+	}
+
+	public void setTxtNome(JTextField txtNome) {
+		this.txtNome = txtNome;
+	}
+
+	public JPasswordField getPsswdSenha() {
+		return psswdSenha;
+	}
+
+	public void setPsswdSenha(JPasswordField psswdSenha) {
+		this.psswdSenha = psswdSenha;
 	}
 }

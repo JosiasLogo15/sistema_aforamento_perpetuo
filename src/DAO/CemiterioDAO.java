@@ -46,12 +46,13 @@ public class CemiterioDAO implements interfaceDAO<Cemiterio>{
 	@Override
 	public void update(Cemiterio cemiterio) {
 		try {
-			sql = "ALTER TABLE cemiterio SET nome=?, endereco=?, bairro=?";
+			sql = "UPDATE cemiterio SET nome=?, endereco=?, bairro=? WHERE codigo_cemiterio = ?";
 			conn = conexao.obterConexao();
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, cemiterio.getNome());
 			stmt.setString(2, cemiterio.getEndereco());
 			stmt.setString(3, cemiterio.getBairro());
+			stmt.setInt(4,  cemiterio.getCodigoCemiterio());
 			stmt.executeQuery();
 			JOptionPane.showMessageDialog(null, "Alteração feita com sucesso!");
 		}catch(SQLException e) {

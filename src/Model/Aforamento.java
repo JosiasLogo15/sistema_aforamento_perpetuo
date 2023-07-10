@@ -1,9 +1,11 @@
 package Model;
 
+import java.util.Date;
+
 public class Aforamento {
 	private int numeroAforamento;
 	private String observacoes;
-	private String dataAforamento;
+	private Date dataAforamento;
 	private int numeroProcesso;
 	private int codigoPrefeito;
 	
@@ -20,10 +22,10 @@ public class Aforamento {
 	public void setObservacoes(String observacoes) {
 		this.observacoes = observacoes;
 	}
-	public String getDataAforamento() {
+	public Date getDataAforamento() {
 		return dataAforamento;
 	}
-	public void setDataAforamento(String dataAforamento) {
+	public void setDataAforamento(Date dataAforamento) {
 		this.dataAforamento = dataAforamento;
 	}
 	public int getNumeroProcesso() {
