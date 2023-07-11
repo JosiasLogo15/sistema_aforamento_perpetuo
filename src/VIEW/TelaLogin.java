@@ -4,22 +4,24 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 
-import Controller.loginController;
+import Controller.LoginController;
 
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class telaLoginVIEW {
+public class TelaLogin {
 
 	private JFrame frmLogin;
 	private JTextField txtNome;
 	private JPasswordField psswdSenha;
-	private loginController controller;
+	private LoginController controller;
 
 	/**
 	 * Launch the application.
@@ -28,7 +30,7 @@ public class telaLoginVIEW {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					telaLoginVIEW window = new telaLoginVIEW();
+					TelaLogin window = new TelaLogin();
 					window.frmLogin.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -40,9 +42,9 @@ public class telaLoginVIEW {
 	/**
 	 * Create the application.
 	 */
-	public telaLoginVIEW() {
+	public TelaLogin() {
 		initialize();
-		controller = new loginController(this);
+		controller = new LoginController(this);
 	}
 
 	/**
@@ -78,7 +80,7 @@ public class telaLoginVIEW {
 		JButton btnEntrar = new JButton("ENTRAR");
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				controller.login(txtNome.getText(), psswdSenha.getText().toString());
 			}
 		});
 		btnEntrar.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -104,5 +106,12 @@ public class telaLoginVIEW {
 
 	public void setPsswdSenha(JPasswordField psswdSenha) {
 		this.psswdSenha = psswdSenha;
+	}
+	
+	public void dispose() {
+		this.frmLogin.dispose();
+	}
+	public void exibeMensagem(String mensagem) {
+		JOptionPane.showMessageDialog(frmLogin, mensagem);
 	}
 }

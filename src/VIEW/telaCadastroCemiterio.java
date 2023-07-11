@@ -8,10 +8,15 @@ import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import Controller.CemiterioController;
+
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class telaCadastroCemiterio {
+public class TelaCadastroCemiterio {
 
 	private JFrame frmCadastroDeCemitrios;
 	private JTextField txtNome;
@@ -22,7 +27,7 @@ public class telaCadastroCemiterio {
 	private JButton btnExcluir;
 	private JButton btnAlterar;
 	private JScrollPane scrollPane;
-
+	private CemiterioController controller;
 	/**
 	 * Launch the application.
 	 */
@@ -30,7 +35,7 @@ public class telaCadastroCemiterio {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					telaCadastroCemiterio window = new telaCadastroCemiterio();
+					TelaCadastroCemiterio window = new TelaCadastroCemiterio();
 					window.frmCadastroDeCemitrios.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -42,8 +47,9 @@ public class telaCadastroCemiterio {
 	/**
 	 * Create the application.
 	 */
-	public telaCadastroCemiterio() {
+	public TelaCadastroCemiterio() {
 		initialize();
+		controller = new CemiterioController(this);
 	}
 
 	/**
@@ -113,6 +119,11 @@ public class telaCadastroCemiterio {
 		table.getColumnModel().getColumn(3).setPreferredWidth(170);
 		
 		btnCadastrar = new JButton("Cadastrar");
+		btnCadastrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.cadastrar();
+			}
+		});
 		btnCadastrar.setBounds(10, 192, 89, 23);
 		frmCadastroDeCemitrios.getContentPane().add(btnCadastrar);
 		
@@ -123,5 +134,45 @@ public class telaCadastroCemiterio {
 		btnAlterar = new JButton("Alterar");
 		btnAlterar.setBounds(208, 192, 89, 23);
 		frmCadastroDeCemitrios.getContentPane().add(btnAlterar);
+	}
+	
+	public JTable getTable() {
+		return table;
+	}
+
+	public void setTable(JTable table) {
+		this.table = table;
+	}
+
+	public JTextField getTxtNome() {
+		return txtNome;
+	}
+
+	public void setTxtNome(JTextField txtNome) {
+		this.txtNome = txtNome;
+	}
+
+	public JTextField getTxtEndereco() {
+		return txtEndereco;
+	}
+
+	public void setTxtEndereco(JTextField txtEndereco) {
+		this.txtEndereco = txtEndereco;
+	}
+
+	public JTextField getTxtBairro() {
+		return txtBairro;
+	}
+
+	public void setTxtBairro(JTextField txtBairro) {
+		this.txtBairro = txtBairro;
+	}
+
+	public void fechaTela() {
+		frmCadastroDeCemitrios.dispose();
+	}
+	
+	public void mostraTela() {
+		frmCadastroDeCemitrios.setVisible(true);
 	}
 }

@@ -20,7 +20,7 @@ import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
 
-public class telaCadastroPrefeito {
+public class TelaCadastroPrefeito {
 
 	private JFrame frmCadastroPrefeito;
 	private JTextField txtNome;
@@ -33,7 +33,7 @@ public class telaCadastroPrefeito {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					telaCadastroPrefeito window = new telaCadastroPrefeito();
+					TelaCadastroPrefeito window = new TelaCadastroPrefeito();
 					window.frmCadastroPrefeito.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -45,7 +45,7 @@ public class telaCadastroPrefeito {
 	/**
 	 * Create the application.
 	 */
-	public telaCadastroPrefeito() {
+	public TelaCadastroPrefeito() {
 		initialize();
 	}
 

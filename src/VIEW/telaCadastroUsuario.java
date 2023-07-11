@@ -9,7 +9,7 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 
-public class telaCadastroUsuario {
+public class TelaCadastroUsuario {
 
 	private JFrame frmCadastroDeUsurio;
 	private JTextField txtNome;
@@ -22,7 +22,7 @@ public class telaCadastroUsuario {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					telaCadastroUsuario window = new telaCadastroUsuario();
+					TelaCadastroUsuario window = new TelaCadastroUsuario();
 					window.frmCadastroDeUsurio.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -34,7 +34,7 @@ public class telaCadastroUsuario {
 	/**
 	 * Create the application.
 	 */
-	public telaCadastroUsuario() {
+	public TelaCadastroUsuario() {
 		initialize();
 	}
 

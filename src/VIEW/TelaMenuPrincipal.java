@@ -9,19 +9,25 @@ import java.awt.Font;
 import javax.swing.JMenuItem;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import Controller.MenuController;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class telaMainVIEW {
+public class TelaMenuPrincipal {
 
 	private JFrame frmMenuPrincipal;
+	
+
 	private JTextField txtNomeUsuario;
 	private JTextField txtData;
 	private JTextField txtHora;
 	private JTextField txtSite;
 	private JTextField txtVersao;
 	private JTextField txtNivel;
+	private MenuController controller;
 
 	/**
 	 * Launch the application.
@@ -30,7 +36,7 @@ public class telaMainVIEW {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					telaMainVIEW window = new telaMainVIEW();
+					TelaMenuPrincipal window = new TelaMenuPrincipal();
 					window.frmMenuPrincipal.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -42,8 +48,9 @@ public class telaMainVIEW {
 	/**
 	 * Create the application.
 	 */
-	public telaMainVIEW() {
+	public TelaMenuPrincipal() {
 		initialize();
+		controller = new MenuController(this);
 	}
 
 	/**
@@ -65,7 +72,7 @@ public class telaMainVIEW {
 		JMenuItem mntmCadastroCemiterio = new JMenuItem("Cadastro de Cemitério");
 		mntmCadastroCemiterio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				controller.cadastraCemiterio();
 			}
 		});
 		mnCadastro.add(mntmCadastroCemiterio);
@@ -154,6 +161,14 @@ public class telaMainVIEW {
 		txtNivel.setBounds(176, 405, 187, 20);
 		frmMenuPrincipal.getContentPane().add(txtNivel);
 		txtNivel.setColumns(10);
+	}
+	
+	public void fechaTela(JFrame frmMenuPrincipal) {
+		this.frmMenuPrincipal.dispose();
+	}
+	
+	public void mostraTela() {
+		this.frmMenuPrincipal.setVisible(true);
 	}
 
 }

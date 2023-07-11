@@ -1,13 +1,16 @@
 package Controller;
 
+import javax.swing.JOptionPane;
+
 import Controller.Helper.LoginHelper;
 import DAO.UsuarioDAO;
 import Model.Usuario;
-import VIEW.telaLoginVIEW;
+import VIEW.TelaLogin;
+import VIEW.TelaMenuPrincipal;
 
-public class loginController {
+public class LoginController {
 	
-	private final telaLoginVIEW view;
+	private final TelaLogin view;
 	
 	
 	UsuarioDAO usuarioDAO = new UsuarioDAO();
@@ -15,7 +18,7 @@ public class loginController {
 
 	private LoginHelper helper;
 	
-	public loginController(telaLoginVIEW view) {
+	public LoginController(TelaLogin view) {
 		this.view = view;
 		this.helper = new LoginHelper(view);
 	}
@@ -23,6 +26,16 @@ public class loginController {
 	public void login(String nome, String senha) {
 		Usuario usuario = helper.obterModelo();
 		
+		Boolean resultado = usuarioDAO.verificaNoBanco(usuario);
+		
+		if (resultado == true) {
+			TelaMenuPrincipal menu = new TelaMenuPrincipal();
+			menu.mostraTela();
+			view.dispose();
+		}else {
+			view.exibeMensagem("Usuário ou senha inválidos!");
+			helper.limpaTela();
+		}
 	}
 	
 	

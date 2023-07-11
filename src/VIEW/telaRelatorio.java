@@ -13,7 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
 
-public class telaRelatorio {
+public class TelaRelatorio {
 
 	private JFrame frmRelatrios;
 	private JTextField txtBusca;
@@ -26,7 +26,7 @@ public class telaRelatorio {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					telaRelatorio window = new telaRelatorio();
+					TelaRelatorio window = new TelaRelatorio();
 					window.frmRelatrios.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -38,7 +38,7 @@ public class telaRelatorio {
 	/**
 	 * Create the application.
 	 */
-	public telaRelatorio() {
+	public TelaRelatorio() {
 		initialize();
 	}
 

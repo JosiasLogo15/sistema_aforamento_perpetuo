@@ -1,18 +1,18 @@
 package Controller.Helper;
 
 import Model.Usuario;
-import VIEW.telaLoginVIEW;
+import VIEW.TelaLogin;
 
 public class LoginHelper {
-	private final telaLoginVIEW view;
+	private final TelaLogin view;
 	
-	public LoginHelper(telaLoginVIEW view) {
+	public LoginHelper(TelaLogin view) {
 		this.view = view;
 	}
 	
 	public Usuario obterModelo() {
 		String nome = view.getTxtNome().getText();
-		String senha = view.getPsswdSenha().getPassword().toString();
+		String senha = view.getPsswdSenha().getText().toString();
 		Usuario usuario = new Usuario(nome, senha);
 		return usuario;
 	}

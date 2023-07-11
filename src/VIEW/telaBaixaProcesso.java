@@ -14,7 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-public class telaBaixaProcesso {
+public class TelaBaixaProcesso {
 
 	private JFrame frmBaixaProcesso;
 	private JTextField txtAforamento;
@@ -29,7 +29,7 @@ public class telaBaixaProcesso {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					telaBaixaProcesso window = new telaBaixaProcesso();
+					TelaBaixaProcesso window = new TelaBaixaProcesso();
 					window.frmBaixaProcesso.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -41,7 +41,7 @@ public class telaBaixaProcesso {
 	/**
 	 * Create the application.
 	 */
-	public telaBaixaProcesso() {
+	public TelaBaixaProcesso() {
 		initialize();
 	}
 

@@ -13,7 +13,7 @@ import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import javax.swing.JComboBox;
 
-public class telaEntradaProcesso {
+public class TelaEntradaProcesso {
 
 	private JFrame frmEntradaProcesso;
 	private JTextField txtNumeroProcesso;
@@ -35,7 +35,7 @@ public class telaEntradaProcesso {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					telaEntradaProcesso window = new telaEntradaProcesso();
+					TelaEntradaProcesso window = new TelaEntradaProcesso();
 					window.frmEntradaProcesso.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -47,7 +47,7 @@ public class telaEntradaProcesso {
 	/**
 	 * Create the application.
 	 */
-	public telaEntradaProcesso() {
+	public TelaEntradaProcesso() {
 		initialize();
 	}
 
