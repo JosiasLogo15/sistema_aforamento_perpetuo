@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.JTable;
@@ -50,6 +51,7 @@ public class TelaCadastroCemiterio {
 	public TelaCadastroCemiterio() {
 		initialize();
 		controller = new CemiterioController(this);
+		controller.listaCemiterio();
 	}
 
 	/**
@@ -97,6 +99,7 @@ public class TelaCadastroCemiterio {
 		frmCadastroDeCemitrios.getContentPane().add(scrollPane);
 		
 		table = new JTable();
+		table.setRowSelectionAllowed(false);
 		scrollPane.setViewportView(table);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
@@ -105,14 +108,7 @@ public class TelaCadastroCemiterio {
 			new String[] {
 				"Codigo", "Nome", "Endere\u00E7o", "Bairro"
 			}
-		) {
-			Class[] columnTypes = new Class[] {
-				Integer.class, String.class, String.class, String.class
-			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
+		));
 		table.getColumnModel().getColumn(0).setPreferredWidth(52);
 		table.getColumnModel().getColumn(1).setPreferredWidth(162);
 		table.getColumnModel().getColumn(2).setPreferredWidth(245);
@@ -124,15 +120,20 @@ public class TelaCadastroCemiterio {
 				controller.cadastrar();
 			}
 		});
-		btnCadastrar.setBounds(10, 192, 89, 23);
+		btnCadastrar.setBounds(10, 192, 108, 23);
 		frmCadastroDeCemitrios.getContentPane().add(btnCadastrar);
 		
 		btnExcluir = new JButton("Excluir");
-		btnExcluir.setBounds(109, 192, 89, 23);
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.excluir(table.getSelectedColumn());
+			}
+		});
+		btnExcluir.setBounds(128, 192, 89, 23);
 		frmCadastroDeCemitrios.getContentPane().add(btnExcluir);
 		
 		btnAlterar = new JButton("Alterar");
-		btnAlterar.setBounds(208, 192, 89, 23);
+		btnAlterar.setBounds(227, 192, 89, 23);
 		frmCadastroDeCemitrios.getContentPane().add(btnAlterar);
 	}
 	
@@ -174,5 +175,9 @@ public class TelaCadastroCemiterio {
 	
 	public void mostraTela() {
 		frmCadastroDeCemitrios.setVisible(true);
+	}
+	
+	public void exibeMensagem(String Mensagem) {
+		JOptionPane.showMessageDialog(frmCadastroDeCemitrios, Mensagem);
 	}
 }

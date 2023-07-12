@@ -40,7 +40,7 @@ public class AforamentoDAO implements interfaceDAO<Aforamento> {
 			stmt.setDate(2, datasql);
 			stmt.setInt(3, processoDAO.findById());
 			stmt.setInt(4, prefeitoDAO.findById());
-			stmt.executeQuery();
+			stmt.executeUpdate();
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao inserir o aforamento: " + e);
 		}finally {
@@ -66,7 +66,7 @@ public class AforamentoDAO implements interfaceDAO<Aforamento> {
 			stmt.setInt(3, processoDAO.findById());
 			stmt.setInt(4, prefeitoDAO.findById());
 			stmt.setInt(5, aforamento.getNumeroAforamento());
-			stmt.executeQuery();
+			stmt.executeUpdate();
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao alterar o registro: " + e);
 		} finally {
@@ -86,7 +86,7 @@ public class AforamentoDAO implements interfaceDAO<Aforamento> {
 			conn = conexao.obterConexao();
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, aforamento.getNumeroAforamento());
-			stmt.executeQuery();
+			stmt.executeUpdate();
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao deletar o registro: " + e);
 		}finally {

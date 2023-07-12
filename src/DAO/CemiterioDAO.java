@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -25,14 +26,13 @@ public class CemiterioDAO implements interfaceDAO<Cemiterio>{
 	@Override
 	public void save(Cemiterio cemiterio) {
 		try {
-		sql = "INSER INTO cemiterio(nome, endereco, bairro) VALUE (?,?,?)";
+		sql = "INSERT INTO cemiterio(nome, endereco, bairro) VALUES (?,?,?)";
 		conn = conexao.obterConexao();
 		stmt = conn.prepareStatement(sql);
 		stmt.setString(1, cemiterio.getNome());
 		stmt.setString(2, cemiterio.getEndereco());
 		stmt.setString(3, cemiterio.getBairro());
-		stmt.executeQuery();
-		JOptionPane.showMessageDialog(null, "");
+		stmt.executeUpdate();
 		}catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao inserir os dados: " + e);
 		}finally {
@@ -53,7 +53,7 @@ public class CemiterioDAO implements interfaceDAO<Cemiterio>{
 			stmt.setString(2, cemiterio.getEndereco());
 			stmt.setString(3, cemiterio.getBairro());
 			stmt.setInt(4,  cemiterio.getCodigoCemiterio());
-			stmt.executeQuery();
+			stmt.executeUpdate();
 			JOptionPane.showMessageDialog(null, "Alteração feita com sucesso!");
 		}catch(SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao fazer a alteração: " + e);
@@ -74,7 +74,7 @@ public class CemiterioDAO implements interfaceDAO<Cemiterio>{
 			conn = conexao.obterConexao();
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, cemiterio.getCodigoCemiterio());
-			stmt.executeQuery();
+			stmt.executeUpdate();
 			JOptionPane.showMessageDialog(null, "Cemiterio deletado com sucesso!");
 		}catch(SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao deletar o registro: "+ e);
@@ -90,7 +90,7 @@ public class CemiterioDAO implements interfaceDAO<Cemiterio>{
 
 	@Override
 	public List<Cemiterio> findAll() {
-		List<Cemiterio> listaCemiterio = null;
+		List<Cemiterio> listaCemiterio = new ArrayList();
 		try {
 			
 			sql = "SELECT * FROM cemiterio";
@@ -109,13 +109,19 @@ public class CemiterioDAO implements interfaceDAO<Cemiterio>{
 			
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao buscar os registros " + e);
-		}finally {
+			try {
+				conexao.fecharConexao(conn);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}/*finally {
 			try {
 				conexao.fecharConexao(conn);
 			} catch (SQLException e2) {
 				//Escrever log no arquivo de log
 			}
-		}
+		}*/
 		return listaCemiterio;
 	}
 

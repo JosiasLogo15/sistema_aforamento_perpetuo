@@ -33,7 +33,7 @@ public class PrefeitoDAO implements interfaceDAO<Prefeito>{
 			stmt.setString(1,prefeito.getNome());
 			stmt.setDate(2, datasql);
 			datasql = new java.sql.Date(dataFinal.getDate());
-			stmt.executeQuery();
+			stmt.executeUpdate();
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao inserir o aforamento: " + e);
 		}finally {
@@ -58,7 +58,7 @@ public class PrefeitoDAO implements interfaceDAO<Prefeito>{
 			stmt.setDate(2, datasql);
 			datasql = new java.sql.Date(dataFinal.getDate());
 			stmt.setDate(2, datasql);
-			stmt.executeQuery();
+			stmt.executeUpdate();
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao alterar o registro: " + e);
 		} finally {
@@ -78,7 +78,7 @@ public class PrefeitoDAO implements interfaceDAO<Prefeito>{
 			conn = conexao.obterConexao();
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, prefeito.getCodigoPrefeito());
-			stmt.executeQuery();
+			stmt.executeUpdate();
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao deletar o registro: " + e);
 		}finally {

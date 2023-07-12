@@ -14,14 +14,29 @@ public class CemiterioController {
 		this.view = view;
 		helper = new CemiterioHelper(view);
 	}
-
+	
 	public void cadastrar() {
 		Cemiterio cemiterio = helper.obterModelo();
+		if(helper.verificaModelo(cemiterio)) {
+			cemiteroDAO.save(cemiterio);
+		}else {
+			view.exibeMensagem("COMPLETE TODOS OS CAMPOS PARA CADASTRAR");
+		}
 		
-		cemiteroDAO.save(cemiterio);
 		helper.limpaTela();
+		listaCemiterio();
 		
+	}
+	
+	public void listaCemiterio() {
 		helper.listaCemiterio(cemiteroDAO.findAll());
 	}
 
+	public void excluir(int selectedColumn) {
+		Cemiterio cemiterio = cemiteroDAO.findById(selectedColumn);
+		cemiteroDAO.delete(cemiterio);
+		
+		view.exibeMensagem("Cemiterio deletado com sucesso");
+	}
+	
 }

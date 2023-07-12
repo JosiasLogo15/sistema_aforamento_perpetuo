@@ -49,6 +49,7 @@ public class ProcessoDAO implements interfaceDAO<Processo>{
 		stmt.setString(12, processo.getFolha());
 		stmt.setString(13, processo.getLivro());
 		stmt.setString(14, processo.getCodigoCemiterio());
+		stmt.executeUpdate();
 		}catch (SQLException e) {
 			JOptionPane.showMessageDialog(null,"Ocorreu um erro ao salvar o registro: " + e);
 		}finally {
@@ -88,6 +89,7 @@ public class ProcessoDAO implements interfaceDAO<Processo>{
 			stmt.setString(13, processo.getLivro());
 			stmt.setString(14, processo.getCodigoCemiterio());
 			stmt.setInt(15, processo.getNumeroProcesso());
+			stmt.executeUpdate();
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao atualizar o registro: " + e);
 		}finally {
@@ -107,6 +109,7 @@ public class ProcessoDAO implements interfaceDAO<Processo>{
 		conn = conexao.obterConexao();
 		stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, processo.getNumeroProcesso());
+		stmt.executeUpdate();
 		}catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao apagar o registro: " + e);
 		}finally {

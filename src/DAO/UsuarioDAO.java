@@ -25,7 +25,7 @@ public class UsuarioDAO {
 		stmt = conn.prepareStatement(sql);
 		stmt.setString(1, usuario.getNome());
 		stmt.setString(2, usuario.getSenha());
-		stmt.executeQuery();
+		stmt.executeUpdate();
 		}catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao inserir o usuário: " + e);
 		}finally {
