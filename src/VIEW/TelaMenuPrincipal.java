@@ -78,9 +78,19 @@ public class TelaMenuPrincipal {
 		mnCadastro.add(mntmCadastroCemiterio);
 		
 		JMenuItem mntmCadastroPrefeito = new JMenuItem("Cadastro de Prefeito");
+		mntmCadastroPrefeito.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.cadastraPrefeito();
+			}
+		});
 		mnCadastro.add(mntmCadastroPrefeito);
 		
 		JMenuItem mntmCadastroUsuario = new JMenuItem("Cadastro de Usuário");
+		mntmCadastroUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.cadastraUsuario();
+			}
+		});
 		mnCadastro.add(mntmCadastroUsuario);
 		
 		JMenu mnProcessos = new JMenu("Processos");

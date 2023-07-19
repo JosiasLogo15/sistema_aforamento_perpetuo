@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -15,7 +16,7 @@ import Model.Prefeito;
 public class PrefeitoDAO implements interfaceDAO<Prefeito>{
 	private Connection conn;
 	private String sql;
-	private Conexao conexao;
+	private Conexao conexao = new Conexao();
 	private ResultSet rs;
 	private PreparedStatement stmt;
 	private java.util.Date dataInicio;
@@ -26,13 +27,18 @@ public class PrefeitoDAO implements interfaceDAO<Prefeito>{
 	public void save(Prefeito prefeito) {
 		try {
 			dataInicio = prefeito.getDataInicio();
-			datasql = new java.sql.Date(dataInicio.getDate());
+			datasql = new java.sql.Date(dataInicio.getTime());
+
 			sql = "INSERT INTO prefeito(nome, inicio, final) VALUES(?,?,?)";
 			conn = conexao.obterConexao();
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1,prefeito.getNome());
 			stmt.setDate(2, datasql);
-			datasql = new java.sql.Date(dataFinal.getDate());
+			
+			dataFinal = prefeito.getDataFinal();
+			datasql = new java.sql.Date(dataFinal.getTime());
+
+			stmt.setDate(3, datasql);
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao inserir o aforamento: " + e);
@@ -50,14 +56,18 @@ public class PrefeitoDAO implements interfaceDAO<Prefeito>{
 	public void update(Prefeito prefeito) {
 		try {
 			dataInicio = prefeito.getDataInicio();
-			datasql = new java.sql.Date(dataInicio.getDate());
+			datasql = new java.sql.Date(dataInicio.getTime());
+			
 			conn = conexao.obterConexao();
 			sql = "UPDATE prefeito SET nome=?, inicio=?, final=? WHERE codigo_prefeito=?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, prefeito.getNome());
 			stmt.setDate(2, datasql);
-			datasql = new java.sql.Date(dataFinal.getDate());
-			stmt.setDate(2, datasql);
+			
+			dataFinal = prefeito.getDataFinal();
+			datasql = new java.sql.Date(dataFinal.getTime());
+			stmt.setDate(3, datasql);
+			stmt.setInt(4, prefeito.getCodigoPrefeito());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao alterar o registro: " + e);
@@ -93,7 +103,7 @@ public class PrefeitoDAO implements interfaceDAO<Prefeito>{
 
 	@Override
 	public List<Prefeito> findAll() {
-		List<Prefeito> listaPrefeito = null;
+		List<Prefeito> listaPrefeitos = new ArrayList<Prefeito>();
 		try {
 			
 			conn = conexao.obterConexao();
@@ -107,7 +117,7 @@ public class PrefeitoDAO implements interfaceDAO<Prefeito>{
 				prefeito.setNome(rs.getString("nome"));
 				prefeito.setDataInicio(rs.getDate("inicio"));
 				prefeito.setDataFinal(rs.getDate("final"));
-				listaPrefeito.add(prefeito);
+				listaPrefeitos.add(prefeito);
 				
 			}
 			
@@ -120,7 +130,7 @@ public class PrefeitoDAO implements interfaceDAO<Prefeito>{
 				// Escrever log no arquivo de log
 			}
 		}
-		return listaPrefeito;
+		return listaPrefeitos;
 	}
 
 	@Override
@@ -128,14 +138,16 @@ public class PrefeitoDAO implements interfaceDAO<Prefeito>{
 		Prefeito prefeito = new Prefeito();
 		try {
 			conn = conexao.obterConexao();
-			sql = "SELECT * FROM aforamento WHERE codigo_prefeito = ?";
+			sql = "SELECT * FROM prefeito WHERE codigo_prefeito = ?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, codigo);
 			rs = stmt.executeQuery();
+			if(rs.next()) {
 			prefeito.setCodigoPrefeito(rs.getInt("codigo_prefeito"));
 			prefeito.setNome(rs.getString("nome"));
 			prefeito.setDataInicio(rs.getDate("inicio"));
 			prefeito.setDataFinal(rs.getDate("final"));
+			}
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao buscar o registro: " + e);
 		}finally {

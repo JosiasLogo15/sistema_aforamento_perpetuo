@@ -38,8 +38,8 @@ public class AforamentoDAO implements interfaceDAO<Aforamento> {
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1,aforamento.getObservacoes());
 			stmt.setDate(2, datasql);
-			stmt.setInt(3, processoDAO.findById());
-			stmt.setInt(4, prefeitoDAO.findById());
+			//stmt.setInt(3, processoDAO.findById());
+			//stmt.setInt(4, prefeitoDAO.findById());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao inserir o aforamento: " + e);

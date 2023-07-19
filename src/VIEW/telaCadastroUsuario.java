@@ -4,17 +4,24 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
+
+import Controller.UsuarioController;
+
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class TelaCadastroUsuario {
 
 	private JFrame frmCadastroDeUsurio;
 	private JTextField txtNome;
 	private JPasswordField psswdSenha;
-
+	private UsuarioController controller;
 	/**
 	 * Launch the application.
 	 */
@@ -36,6 +43,7 @@ public class TelaCadastroUsuario {
 	 */
 	public TelaCadastroUsuario() {
 		initialize();
+		controller = new UsuarioController(this);
 	}
 
 	/**
@@ -45,7 +53,7 @@ public class TelaCadastroUsuario {
 		frmCadastroDeUsurio = new JFrame();
 		frmCadastroDeUsurio.setTitle("Cadastro de Usuário");
 		frmCadastroDeUsurio.setBounds(100, 100, 253, 256);
-		frmCadastroDeUsurio.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmCadastroDeUsurio.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmCadastroDeUsurio.getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Nome:");
@@ -68,7 +76,44 @@ public class TelaCadastroUsuario {
 		frmCadastroDeUsurio.getContentPane().add(psswdSenha);
 		
 		JButton btnCadastrar = new JButton("Cadastrar");
+		btnCadastrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				controller.cadastrar();
+			}
+		});
 		btnCadastrar.setBounds(73, 183, 89, 23);
 		frmCadastroDeUsurio.getContentPane().add(btnCadastrar);
+		
+		
 	}
+
+	public JPasswordField getPsswdSenha() {
+		return psswdSenha;
+	}
+
+	public void setPsswdSenha(JPasswordField psswdSenha) {
+		this.psswdSenha = psswdSenha;
+	}
+
+	public JTextField getTxtNome() {
+		return txtNome;
+	}
+
+	public void setTxtNome(JTextField txtNome) {
+		this.txtNome = txtNome;
+	}
+
+	public void mostraTela() {
+		frmCadastroDeUsurio.setVisible(true);
+	}
+		
+	public void fechaTela() {
+		frmCadastroDeUsurio.dispose();
+	}
+
+	public void exibeMensagem(String string) {
+		JOptionPane.showMessageDialog(frmCadastroDeUsurio, string);
+	}
+	
 }

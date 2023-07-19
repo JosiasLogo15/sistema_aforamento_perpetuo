@@ -54,7 +54,6 @@ public class CemiterioDAO implements interfaceDAO<Cemiterio>{
 			stmt.setString(3, cemiterio.getBairro());
 			stmt.setInt(4,  cemiterio.getCodigoCemiterio());
 			stmt.executeUpdate();
-			JOptionPane.showMessageDialog(null, "Alteração feita com sucesso!");
 		}catch(SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao fazer a alteração: " + e);
 		} finally {
@@ -75,7 +74,6 @@ public class CemiterioDAO implements interfaceDAO<Cemiterio>{
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, cemiterio.getCodigoCemiterio());
 			stmt.executeUpdate();
-			JOptionPane.showMessageDialog(null, "Cemiterio deletado com sucesso!");
 		}catch(SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao deletar o registro: "+ e);
 		} finally {
@@ -129,21 +127,21 @@ public class CemiterioDAO implements interfaceDAO<Cemiterio>{
 	public Cemiterio findById(int codigo) {
 		Cemiterio cemiterio = new Cemiterio();
 		try {
-			
-			sql = "SELECT * FROM cemiterio WHERE codigo_cemiterio=?";
+			sql = "SELECT * FROM cemiterio WHERE codigo_cemiterio = ?";
 			conn = conexao.obterConexao();
 			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, cemiterio.getCodigoCemiterio());
+			stmt.setInt(1, codigo);
 			rs = stmt.executeQuery();
 			
+			if(rs.next()) {
 			cemiterio.setCodigoCemiterio(rs.getInt("codigo_cemiterio"));
 			cemiterio.setNome(rs.getString("nome"));
 			cemiterio.setEndereco(rs.getString("endereco"));
 			cemiterio.setBairro(rs.getString("bairro"));
-			
+			}
 			
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(null,"Ocorreu um erro ao buscar o registro pelo codigo informado" + e);
+			JOptionPane.showMessageDialog(null,"Ocorreu um erro ao buscar o registro pelo codigo informado " + e);
 		}finally {
 			try {
 				conexao.fecharConexao(conn);

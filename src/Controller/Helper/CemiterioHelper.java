@@ -53,10 +53,31 @@ public class CemiterioHelper {
 
 	public boolean verificaModelo(Cemiterio cemiterio) {
 		
-		if(cemiterio.getNome() == "" || cemiterio.getEndereco() == "" || cemiterio.getBairro() == "") {
-			return true;
+		String nome = cemiterio.getNome();
+		String endereco = cemiterio.getEndereco();
+		String bairro = cemiterio.getBairro();
+		
+		if(nome == "" || endereco == "" ||  bairro == "") {
+			return false;
 		}
 		
-		return false;
+		return true;
+	}
+
+	public int capturaValor() {
+		int linha = view.getTable().getSelectedRow();
+		int coluna = 0;
+		int valor = (int) view.getTable().getValueAt(linha, coluna);
+		return valor;
+	}
+
+	public void preencheTela(Cemiterio cemiterio) {
+		String nome = cemiterio.getNome();
+		String endereco = cemiterio.getEndereco();
+		String bairro = cemiterio.getBairro();
+		
+		view.getTxtNome().setText(nome);
+		view.getTxtEndereco().setText(endereco);
+		view.getTxtBairro().setText(bairro);
 	}
 }

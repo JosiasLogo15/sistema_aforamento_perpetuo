@@ -7,11 +7,16 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.Font;
 import com.toedter.calendar.JDateChooser;
+
+import Controller.ProcessoController;
+
 import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import javax.swing.JComboBox;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class TelaEntradaProcesso {
 
@@ -27,6 +32,9 @@ public class TelaEntradaProcesso {
 	private JTextField txtMedida;
 	private JTextField txtNacionalidade;
 	private JTable table;
+	private ProcessoController controller;
+	private JDateChooser dataEntrada = new JDateChooser();
+	private JComboBox cmbbxCemiterio = new JComboBox();
 
 	/**
 	 * Launch the application.
@@ -49,6 +57,7 @@ public class TelaEntradaProcesso {
 	 */
 	public TelaEntradaProcesso() {
 		initialize();
+		controller = new ProcessoController(this);
 	}
 
 	/**
@@ -91,7 +100,6 @@ public class TelaEntradaProcesso {
 		lblNewLabel_1_1.setBounds(476, 25, 66, 14);
 		frmEntradaProcesso.getContentPane().add(lblNewLabel_1_1);
 		
-		JDateChooser dataEntrada = new JDateChooser();
 		dataEntrada.setBounds(609, 87, 108, 20);
 		frmEntradaProcesso.getContentPane().add(dataEntrada);
 		
@@ -180,6 +188,11 @@ public class TelaEntradaProcesso {
 		frmEntradaProcesso.getContentPane().add(table);
 		
 		JButton btnCadastrar = new JButton("Cadastrar");
+		btnCadastrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.cadastrar();
+			}
+		});
 		btnCadastrar.setBounds(20, 168, 112, 28);
 		frmEntradaProcesso.getContentPane().add(btnCadastrar);
 		
@@ -195,8 +208,112 @@ public class TelaEntradaProcesso {
 		btnBuscar.setBounds(535, 168, 108, 28);
 		frmEntradaProcesso.getContentPane().add(btnBuscar);
 		
-		JComboBox cmbbxCemiterio = new JComboBox();
+		
 		cmbbxCemiterio.setBounds(348, 127, 118, 22);
 		frmEntradaProcesso.getContentPane().add(cmbbxCemiterio);
+	}
+
+	public JDateChooser getDataEntrada() {
+		return dataEntrada;
+	}
+
+	public void setDataEntrada(JDateChooser dataEntrada) {
+		this.dataEntrada = dataEntrada;
+	}
+
+	public JTextField getTxtNumeroProcesso() {
+		return txtNumeroProcesso;
+	}
+
+	public void setTxtNumeroProcesso(JTextField txtNumeroProcesso) {
+		this.txtNumeroProcesso = txtNumeroProcesso;
+	}
+
+	public JTextField getTxtRequerente() {
+		return txtRequerente;
+	}
+
+	public void setTxtRequerente(JTextField txtRequerente) {
+		this.txtRequerente = txtRequerente;
+	}
+
+	public JTextField getTxtFalecido() {
+		return txtFalecido;
+	}
+
+	public void setTxtFalecido(JTextField txtFalecido) {
+		this.txtFalecido = txtFalecido;
+	}
+
+	public JTextField getTxtEndereco() {
+		return txtEndereco;
+	}
+
+	public void setTxtEndereco(JTextField txtEndereco) {
+		this.txtEndereco = txtEndereco;
+	}
+
+	public JTextField getTxtBairro() {
+		return txtBairro;
+	}
+
+	public void setTxtBairro(JTextField txtBairro) {
+		this.txtBairro = txtBairro;
+	}
+
+	public JTextField getTxtQuadra() {
+		return txtQuadra;
+	}
+
+	public void setTxtQuadra(JTextField txtQuadra) {
+		this.txtQuadra = txtQuadra;
+	}
+
+	public JTextField getTxtEstaca() {
+		return txtEstaca;
+	}
+
+	public void setTxtEstaca(JTextField txtEstaca) {
+		this.txtEstaca = txtEstaca;
+	}
+
+	public JTextField getTxtRg() {
+		return txtRg;
+	}
+
+	public void setTxtRg(JTextField txtRg) {
+		this.txtRg = txtRg;
+	}
+
+	public JTextField getTxtMedida() {
+		return txtMedida;
+	}
+
+	public void setTxtMedida(JTextField txtMedida) {
+		this.txtMedida = txtMedida;
+	}
+
+	public JTextField getTxtNacionalidade() {
+		return txtNacionalidade;
+	}
+
+	public void setTxtNacionalidade(JTextField txtNacionalidade) {
+		this.txtNacionalidade = txtNacionalidade;
+	}
+
+	public JTable getTable() {
+		return table;
+	}
+
+	public void setTable(JTable table) {
+		this.table = table;
+	}
+
+	public JComboBox getCmbbxCemiterio() {
+		return cmbbxCemiterio;
+	}
+
+	public void setCmbbxCemiterio(JComboBox cmbbxCemiterio) {
+		this.cmbbxCemiterio = cmbbxCemiterio;
 	}
 }

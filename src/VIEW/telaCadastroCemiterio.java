@@ -16,6 +16,9 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ListSelectionModel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class TelaCadastroCemiterio {
 
@@ -99,7 +102,16 @@ public class TelaCadastroCemiterio {
 		frmCadastroDeCemitrios.getContentPane().add(scrollPane);
 		
 		table = new JTable();
-		table.setRowSelectionAllowed(false);
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(e.getClickCount() == 2) {
+					controller.preencheTela();
+				}
+			}
+		});
+		table.setCellSelectionEnabled(true);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(table);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
@@ -108,7 +120,14 @@ public class TelaCadastroCemiterio {
 			new String[] {
 				"Codigo", "Nome", "Endere\u00E7o", "Bairro"
 			}
-		));
+		) {
+			boolean[] columnEditables = new boolean[] {
+				true, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
 		table.getColumnModel().getColumn(0).setPreferredWidth(52);
 		table.getColumnModel().getColumn(1).setPreferredWidth(162);
 		table.getColumnModel().getColumn(2).setPreferredWidth(245);
@@ -126,13 +145,18 @@ public class TelaCadastroCemiterio {
 		btnExcluir = new JButton("Excluir");
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.excluir(table.getSelectedColumn());
+				controller.excluir();
 			}
 		});
 		btnExcluir.setBounds(128, 192, 89, 23);
 		frmCadastroDeCemitrios.getContentPane().add(btnExcluir);
 		
 		btnAlterar = new JButton("Alterar");
+		btnAlterar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.alterar();
+			}
+		});
 		btnAlterar.setBounds(227, 192, 89, 23);
 		frmCadastroDeCemitrios.getContentPane().add(btnAlterar);
 	}
