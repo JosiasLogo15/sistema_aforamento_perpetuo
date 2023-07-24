@@ -3,6 +3,8 @@ package Model;
 import java.util.Date;
 
 public class Prefeito {
+	
+	
 	private int codigoPrefeito;
 	private String nome;
 	private Date dataInicio;
@@ -31,5 +33,10 @@ public class Prefeito {
 	}
 	public void setDataFinal(Date dataFinal) {
 		this.dataFinal = dataFinal;
+	}
+	
+	@Override
+	public String toString() {
+		return  nome;
 	}
 }

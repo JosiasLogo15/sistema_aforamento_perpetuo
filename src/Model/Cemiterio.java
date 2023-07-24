@@ -31,4 +31,9 @@ public class Cemiterio {
 		this.bairro = bairro;
 	}
 	
+	@Override
+	public String toString() {
+		return this.getNome();
+	}
+	
 }

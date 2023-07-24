@@ -98,9 +98,19 @@ public class TelaMenuPrincipal {
 		menuBar.add(mnProcessos);
 		
 		JMenuItem mntmEntradaProcesso = new JMenuItem("Entrada Processo");
+		mntmEntradaProcesso.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.EntradaProcesso();
+			}
+		});
 		mnProcessos.add(mntmEntradaProcesso);
 		
 		JMenuItem mntmBaixaProcesso = new JMenuItem("Baixa Processo");
+		mntmBaixaProcesso.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.BaixaProcesso();
+			}
+		});
 		mnProcessos.add(mntmBaixaProcesso);
 		
 		JMenu mnRelatorios = new JMenu("Relatórios");

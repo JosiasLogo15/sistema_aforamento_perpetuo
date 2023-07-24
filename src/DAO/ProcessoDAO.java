@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -26,29 +27,27 @@ public class ProcessoDAO implements interfaceDAO<Processo>{
 	public void save(Processo processo) {
 		
 		try {
-		sql = "INSERT INTO processo(requerente, medida, falecido, data_entrada, "
-				+ "endereco, bairro, quadra, estaca, situacao, rg, nacionalidade, folha, livro, codigo_cemiterio)"
-				+ "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		sql = "INSERT INTO processo(numero_processo, requerente, medida, falecido, data_entrada, "
+				+ "endereco, bairro, quadra, estaca, rg, nacionalidade,  codigo_cemiterio)"
+				+ "VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
 		conn = conexao.obterConexao();
 		stmt = conn.prepareStatement(sql);
-		stmt.setString(1, processo.getRequerente());
-		stmt.setString(2, processo.getMedida());
-		stmt.setString(3, processo.getFalecido());
+		stmt.setInt(1, processo.getNumeroProcesso());
+		stmt.setString(2, processo.getRequerente());
+		stmt.setString(3, processo.getMedida());
+		stmt.setString(4, processo.getFalecido());
 		
 		data = processo.getDataEntrada();
-		datasql = new java.sql.Date(data.getDate());
+		datasql = new java.sql.Date(data.getTime());
 		
-		stmt.setDate(4, datasql);
-		stmt.setString(5, processo.getEndereco());
-		stmt.setString(6, processo.getBairro());
-		stmt.setString(7, processo.getQuadra());
-		stmt.setString(8, processo.getEstaca());
-		stmt.setString(9, processo.getSituacao());
+		stmt.setDate(5, datasql);
+		stmt.setString(6, processo.getEndereco());
+		stmt.setString(7, processo.getBairro());
+		stmt.setString(8, processo.getQuadra());
+		stmt.setString(9, processo.getEstaca());
 		stmt.setString(10, processo.getRg());
 		stmt.setString(11, processo.getNacionalidade());
-		stmt.setString(12, processo.getFolha());
-		stmt.setString(13, processo.getLivro());
-		stmt.setString(14, processo.getCodigoCemiterio());
+		stmt.setInt(12, processo.getCodigoCemiterio());
 		stmt.executeUpdate();
 		}catch (SQLException e) {
 			JOptionPane.showMessageDialog(null,"Ocorreu um erro ao salvar o registro: " + e);
@@ -66,8 +65,8 @@ public class ProcessoDAO implements interfaceDAO<Processo>{
 	public void update(Processo processo) {
 		try {
 			sql = "UPDATE processo SET requerente=?, medida=?, falecido=?, data_entrada=?, "
-					+ "endereco=?, bairro=?, quadra=?, estaca=?, situacao=?, rg=?, "
-					+ "nacionalidade=?, folha=?, livro=?, codigo_cemiterio=? WHERE numero_processo = ?";
+					+ "endereco=?, bairro=?, quadra=?, estaca=?, rg=?, "
+					+ "nacionalidade=?, codigo_cemiterio=? WHERE numero_processo = ?";
 			conn = conexao.obterConexao();
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, processo.getRequerente());
@@ -82,13 +81,10 @@ public class ProcessoDAO implements interfaceDAO<Processo>{
 			stmt.setString(6, processo.getBairro());
 			stmt.setString(7, processo.getQuadra());
 			stmt.setString(8, processo.getEstaca());
-			stmt.setString(9, processo.getSituacao());
-			stmt.setString(10, processo.getRg());
-			stmt.setString(11, processo.getNacionalidade());
-			stmt.setString(12, processo.getFolha());
-			stmt.setString(13, processo.getLivro());
-			stmt.setString(14, processo.getCodigoCemiterio());
-			stmt.setInt(15, processo.getNumeroProcesso());
+			stmt.setString(9, processo.getRg());
+			stmt.setString(10, processo.getNacionalidade());
+			stmt.setInt(11, processo.getCodigoCemiterio());
+			stmt.setInt(12, processo.getNumeroProcesso());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao atualizar o registro: " + e);
@@ -123,7 +119,7 @@ public class ProcessoDAO implements interfaceDAO<Processo>{
 
 	@Override
 	public List<Processo> findAll() {
-		List<Processo> listaProcessos = null;
+		List<Processo> listaProcessos = new ArrayList<Processo>();
 		try {
 			sql = "SELECT * FROM  processo";
 			conn = conexao.obterConexao();
@@ -132,6 +128,7 @@ public class ProcessoDAO implements interfaceDAO<Processo>{
 			
 			while(rs.next()) {
 				Processo processo = new Processo();
+				processo.setNumeroProcesso(rs.getInt("numero_processo"));
 				processo.setRequerente(rs.getString("requerente"));
 				processo.setMedida(rs.getString("medida"));
 				processo.setFalecido(rs.getString("falecido"));
@@ -140,11 +137,10 @@ public class ProcessoDAO implements interfaceDAO<Processo>{
 				processo.setBairro(rs.getString("bairro"));
 				processo.setQuadra(rs.getString("quadra"));
 				processo.setEstaca(rs.getString("estaca"));
-				processo.setSituacao(rs.getString("situacao"));
+				processo.setCodigoCemiterio(rs.getInt("codigo_cemiterio"));
 				processo.setRg(rs.getString("rg"));
 				processo.setNacionalidade(rs.getString("nacionalidade"));
-				processo.setFolha(rs.getString("folha"));
-				processo.setLivro(rs.getString("livro"));
+
 				listaProcessos.add(processo);
 			}
 		} catch (SQLException e) {
@@ -168,6 +164,8 @@ public class ProcessoDAO implements interfaceDAO<Processo>{
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, codigo);
 			rs = stmt.executeQuery();
+			if(rs.next()) {
+			processo.setNumeroProcesso(rs.getInt("numero_processo"));
 			processo.setRequerente(rs.getString("requerente"));
 			processo.setMedida(rs.getString("medida"));
 			processo.setFalecido(rs.getString("falecido"));
@@ -176,12 +174,11 @@ public class ProcessoDAO implements interfaceDAO<Processo>{
 			processo.setBairro(rs.getString("bairro"));
 			processo.setQuadra(rs.getString("quadra"));
 			processo.setEstaca(rs.getString("estaca"));
-			processo.setSituacao(rs.getString("situacao"));
 			processo.setRg(rs.getString("rg"));
 			processo.setNacionalidade(rs.getString("nacionalidade"));
-			processo.setFolha(rs.getString("folha"));
-			processo.setLivro(rs.getString("livro"));
-			processo.setCodigoCemiterio(rs.getString("codigo_cemiterio"));
+
+			processo.setCodigoCemiterio(rs.getInt("codigo_cemiterio"));
+			}
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null,"Ocorreu um erro ao fazer a busca do registro: " + e);
 		}finally {

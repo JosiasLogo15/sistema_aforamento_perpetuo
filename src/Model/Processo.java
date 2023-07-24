@@ -13,12 +13,9 @@ public class Processo {
 	private String bairro;
 	private String quadra;
 	private String estaca;
-	private String situacao;
 	private String rg;
-	private String codigoCemiterio;
+	private int codigoCemiterio;
 	private String nacionalidade;
-	private String folha;
-	private String livro;
 	
 	public int getNumeroProcesso() {
 		return numeroProcesso;
@@ -74,22 +71,16 @@ public class Processo {
 	public void setEstaca(String estaca) {
 		this.estaca = estaca;
 	}
-	public String getSituacao() {
-		return situacao;
-	}
-	public void setSituacao(String situacao) {
-		this.situacao = situacao;
-	}
 	public String getRg() {
 		return rg;
 	}
 	public void setRg(String rg) {
 		this.rg = rg;
 	}
-	public String getCodigoCemiterio() {
+	public int getCodigoCemiterio() {
 		return codigoCemiterio;
 	}
-	public void setCodigoCemiterio(String codigoCemiterio) {
+	public void setCodigoCemiterio(int codigoCemiterio) {
 		this.codigoCemiterio = codigoCemiterio;
 	}
 	public String getNacionalidade() {
@@ -98,16 +89,11 @@ public class Processo {
 	public void setNacionalidade(String nacionalidade) {
 		this.nacionalidade = nacionalidade;
 	}
-	public String getFolha() {
-		return folha;
+
+	
+	@Override
+	public String toString() {
+		return Integer.toString(numeroProcesso);
 	}
-	public void setFolha(String folha) {
-		this.folha = folha;
-	}
-	public String getLivro() {
-		return livro;
-	}
-	public void setLivro(String livro) {
-		this.livro = livro;
-	}
+	
 }

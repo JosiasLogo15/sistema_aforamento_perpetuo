@@ -91,7 +91,8 @@ public class CemiterioDAO implements interfaceDAO<Cemiterio>{
 		List<Cemiterio> listaCemiterio = new ArrayList();
 		try {
 			
-			sql = "SELECT * FROM cemiterio";
+			sql = "SELECT CODIGO_CEMITERIO, NOME, ENDERECO, BAIRRO FROM cemiterio\r\n"
+					+ "GROUP BY CODIGO_CEMITERIO, NOME, ENDERECO, BAIRRO;";
 			conn = conexao.obterConexao();
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
@@ -102,6 +103,45 @@ public class CemiterioDAO implements interfaceDAO<Cemiterio>{
 				cemiterio.setNome(rs.getString("nome"));
 				cemiterio.setEndereco(rs.getString("endereco"));
 				cemiterio.setBairro(rs.getString("bairro"));
+				listaCemiterio.add(cemiterio);
+			}
+			
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao buscar os registros " + e);
+			try {
+				conexao.fecharConexao(conn);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}/*finally {
+			try {
+				conexao.fecharConexao(conn);
+			} catch (SQLException e2) {
+				//Escrever log no arquivo de log
+			}
+		}*/
+		return listaCemiterio;
+	}
+	
+	public List<Cemiterio> findAllStrange() {
+		List<Cemiterio> listaCemiterio = new ArrayList();
+		try {
+			
+			sql = "SELECT  processo.NUMERO_PROCESSO,  processo.REQUERENTE,  processo.MEDIDA,  processo.FALECIDO,  \r\n"
+					+ "processo.DATA_ENTRADA,  processo.ENDERECO,  processo.BAIRRO,  processo.QUADRA,  processo.ESTACA,  \r\n"
+					+ "processo.SITUACAO,  processo.RG,  processo.CODIGO_CEMITERIO,  processo.NACIONALIDADE \r\n"
+					+ "FROM processo join cemiterio WHERE processo.CODIGO_CEMITERIO = cemiterio.CODIGO_CEMITERIO ";
+			conn = conexao.obterConexao();
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				Cemiterio cemiterio = new Cemiterio();
+				cemiterio.setCodigoCemiterio(rs.getInt("cemiterio.codigo_cemiterio"));
+				cemiterio.setNome(rs.getString("cemiterio.nome"));
+				cemiterio.setEndereco(rs.getString("cemiterio.endereco"));
+				cemiterio.setBairro(rs.getString("cemiterio.bairro"));
 				listaCemiterio.add(cemiterio);
 			}
 			

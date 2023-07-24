@@ -8,15 +8,28 @@ import javax.swing.JTextField;
 import java.awt.Font;
 import com.toedter.calendar.JDateChooser;
 
-import Controller.ProcessoController;
+import Controller.EntradaProcessoController;
 
 import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.AbstractListModel;
 import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.TitledBorder;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.Window.Type;
 
 public class TelaEntradaProcesso {
 
@@ -32,9 +45,10 @@ public class TelaEntradaProcesso {
 	private JTextField txtMedida;
 	private JTextField txtNacionalidade;
 	private JTable table;
-	private ProcessoController controller;
+	private EntradaProcessoController controller;
 	private JDateChooser dataEntrada = new JDateChooser();
 	private JComboBox cmbbxCemiterio = new JComboBox();
+	private JTextField txtBusca;
 
 	/**
 	 * Launch the application.
@@ -57,7 +71,10 @@ public class TelaEntradaProcesso {
 	 */
 	public TelaEntradaProcesso() {
 		initialize();
-		controller = new ProcessoController(this);
+		controller = new EntradaProcessoController(this);
+		controller.listaComboBox();
+		controller.listaProcessos();
+		controller.setarTableSorter();
 	}
 
 	/**
@@ -65,9 +82,10 @@ public class TelaEntradaProcesso {
 	 */
 	private void initialize() {
 		frmEntradaProcesso = new JFrame();
+		frmEntradaProcesso.setResizable(false);
 		frmEntradaProcesso.setTitle("Entrada Processo");
 		frmEntradaProcesso.setBounds(100, 100, 758, 413);
-		frmEntradaProcesso.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmEntradaProcesso.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmEntradaProcesso.getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Nº Processo:");
@@ -87,6 +105,7 @@ public class TelaEntradaProcesso {
 		
 		txtRequerente = new JTextField();
 		txtRequerente.setBounds(303, 24, 163, 20);
+		 
 		frmEntradaProcesso.getContentPane().add(txtRequerente);
 		txtRequerente.setColumns(10);
 		
@@ -99,6 +118,7 @@ public class TelaEntradaProcesso {
 		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblNewLabel_1_1.setBounds(476, 25, 66, 14);
 		frmEntradaProcesso.getContentPane().add(lblNewLabel_1_1);
+		dataEntrada.setDateFormatString("dd'/'MM'/'y");
 		
 		dataEntrada.setBounds(609, 87, 108, 20);
 		frmEntradaProcesso.getContentPane().add(dataEntrada);
@@ -183,9 +203,40 @@ public class TelaEntradaProcesso {
 		lblNewLabel_1_2_1_1_2_1.setBounds(269, 129, 78, 14);
 		frmEntradaProcesso.getContentPane().add(lblNewLabel_1_2_1_1_2_1);
 		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setEnabled(false);
+		scrollPane.setBounds(10, 201, 722, 162);
+		frmEntradaProcesso.getContentPane().add(scrollPane);
+		
 		table = new JTable();
-		table.setBounds(10, 201, 722, 162);
-		frmEntradaProcesso.getContentPane().add(table);
+		table.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(e.getClickCount() == 2) {
+					controller.preencheTela();
+				}
+			}
+		});
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null, null, null, null, null, null},
+			},
+			new String[] {
+				"N\u00BA Processos", "Requerente", "Falecido", "Endere\u00E7o", "Bairro", "Quadra", "Estaca", "Data de Entrada", "Cemiterio"
+			}
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false, false, false, false, true, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		table.getColumnModel().getColumn(0).setPreferredWidth(50);
+		table.getColumnModel().getColumn(0).setMaxWidth(70);
+		scrollPane.setViewportView(table);
+		
 		
 		JButton btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
@@ -197,20 +248,57 @@ public class TelaEntradaProcesso {
 		frmEntradaProcesso.getContentPane().add(btnCadastrar);
 		
 		JButton btnAlterar = new JButton("Alterar");
+		btnAlterar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.alterar();
+			}
+		});
 		btnAlterar.setBounds(191, 168, 99, 28);
 		frmEntradaProcesso.getContentPane().add(btnAlterar);
 		
 		JButton btnDeletar = new JButton("Deletar");
+		btnDeletar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.excluir();
+			}
+		});
 		btnDeletar.setBounds(349, 168, 108, 28);
 		frmEntradaProcesso.getContentPane().add(btnDeletar);
 		
 		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.buscar();
+			}
+		});
 		btnBuscar.setBounds(535, 168, 108, 28);
 		frmEntradaProcesso.getContentPane().add(btnBuscar);
+		cmbbxCemiterio.setToolTipText("");
+		cmbbxCemiterio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.listaComboBox();
+			}
+		});
 		
 		
-		cmbbxCemiterio.setBounds(348, 127, 118, 22);
+		cmbbxCemiterio.setBounds(348, 127, 163, 22);
 		frmEntradaProcesso.getContentPane().add(cmbbxCemiterio);
+		
+		txtBusca = new JTextField();
+		txtBusca.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				controller.buscar();
+			}
+		});
+		txtBusca.setBounds(594, 127, 114, 20);
+		frmEntradaProcesso.getContentPane().add(txtBusca);
+		txtBusca.setColumns(10);
+		
+		JLabel lblNewLabel_1_2_1_1_2_1_1 = new JLabel("Busca:");
+		lblNewLabel_1_2_1_1_2_1_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_1_2_1_1_2_1_1.setBounds(544, 129, 78, 14);
+		frmEntradaProcesso.getContentPane().add(lblNewLabel_1_2_1_1_2_1_1);
 	}
 
 	public JDateChooser getDataEntrada() {
@@ -315,5 +403,26 @@ public class TelaEntradaProcesso {
 
 	public void setCmbbxCemiterio(JComboBox cmbbxCemiterio) {
 		this.cmbbxCemiterio = cmbbxCemiterio;
+	}
+
+	public JTextField getTxtBusca() {
+		return txtBusca;
+	}
+
+	public void setTxtBusca(JTextField txtBusca) {
+		this.txtBusca = txtBusca;
+	}
+
+	public void exibeMensage(String string) {
+		JOptionPane.showMessageDialog(cmbbxCemiterio, string);
+		
+	}
+
+	public void mostraTela() {
+		frmEntradaProcesso.setVisible(true);
+	}
+	
+	public void fechaTela() {
+		frmEntradaProcesso.dispose();
 	}
 }

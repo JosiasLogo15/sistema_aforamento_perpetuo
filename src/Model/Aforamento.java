@@ -8,6 +8,9 @@ public class Aforamento {
 	private Date dataAforamento;
 	private int numeroProcesso;
 	private int codigoPrefeito;
+	private String situacao;
+	private String livro;
+	private String folha;
 	
 	
 	public int getNumeroAforamento() {
@@ -39,6 +42,24 @@ public class Aforamento {
 	}
 	public void setCodigoPrefeito(int codigoPrefeito) {
 		this.codigoPrefeito = codigoPrefeito;
+	}
+	public String getSituacao() {
+		return situacao;
+	}
+	public void setSituacao(String situacao) {
+		this.situacao = situacao;
+	}
+	public String getLivro() {
+		return livro;
+	}
+	public void setLivro(String livro) {
+		this.livro = livro;
+	}
+	public String getFolha() {
+		return folha;
+	}
+	public void setFolha(String folha) {
+		this.folha = folha;
 	}
 	
 	
