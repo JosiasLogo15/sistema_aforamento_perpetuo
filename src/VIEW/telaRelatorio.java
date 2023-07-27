@@ -11,14 +11,22 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
+
+import Controller.RelatorioController;
+
 import javax.swing.JButton;
+import javax.swing.JRadioButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class TelaRelatorio {
 
-	private JFrame frmRelatrios;
+	private JFrame frmRelatorios;
 	private JTextField txtBusca;
 	private JTable table;
-
+	private RelatorioController controller;
+	private JRadioButton rdbtnAforamento = new JRadioButton("Aforamento");
+	private JRadioButton rdbtnProcesso = new JRadioButton("Processo");
 	/**
 	 * Launch the application.
 	 */
@@ -27,7 +35,7 @@ public class TelaRelatorio {
 			public void run() {
 				try {
 					TelaRelatorio window = new TelaRelatorio();
-					window.frmRelatrios.setVisible(true);
+					window.frmRelatorios.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -40,41 +48,37 @@ public class TelaRelatorio {
 	 */
 	public TelaRelatorio() {
 		initialize();
+		controller = new RelatorioController(this);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmRelatrios = new JFrame();
-		frmRelatrios.setTitle("Relatórios");
-		frmRelatrios.setBounds(100, 100, 666, 444);
-		frmRelatrios.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmRelatrios.getContentPane().setLayout(null);
+		frmRelatorios = new JFrame();
+		frmRelatorios.setTitle("Relatórios");
+		frmRelatorios.setBounds(100, 100, 666, 444);
+		frmRelatorios.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmRelatorios.getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Digite a Busca");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblNewLabel.setBounds(10, 61, 96, 14);
-		frmRelatrios.getContentPane().add(lblNewLabel);
+		frmRelatorios.getContentPane().add(lblNewLabel);
 		
 		txtBusca = new JTextField();
 		txtBusca.setBounds(112, 60, 237, 20);
-		frmRelatrios.getContentPane().add(txtBusca);
+		frmRelatorios.getContentPane().add(txtBusca);
 		txtBusca.setColumns(10);
-		
-		JComboBox cmbbxFiltroBusca = new JComboBox();
-		cmbbxFiltroBusca.setModel(new DefaultComboBoxModel(new String[] {"Nº de Processo", "Nº de Aforamento", "teste"}));
-		cmbbxFiltroBusca.setBounds(132, 13, 115, 22);
-		frmRelatrios.getContentPane().add(cmbbxFiltroBusca);
 		
 		JLabel lblNewLabel_1 = new JLabel("Filtro de Busca");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblNewLabel_1.setBounds(10, 15, 101, 14);
-		frmRelatrios.getContentPane().add(lblNewLabel_1);
+		frmRelatorios.getContentPane().add(lblNewLabel_1);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 148, 630, 246);
-		frmRelatrios.getContentPane().add(scrollPane);
+		frmRelatorios.getContentPane().add(scrollPane);
 		
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
@@ -101,13 +105,60 @@ public class TelaRelatorio {
 		scrollPane.setViewportView(table);
 		
 		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.buscar();
+			}
+		});
 		btnBuscar.setBounds(21, 106, 115, 32);
-		frmRelatrios.getContentPane().add(btnBuscar);
+		frmRelatorios.getContentPane().add(btnBuscar);
 		
 		JButton btnImprimir = new JButton("Imprimir\r\n");
 		btnImprimir.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnImprimir.setBounds(504, 106, 124, 32);
-		frmRelatrios.getContentPane().add(btnImprimir);
+		frmRelatorios.getContentPane().add(btnImprimir);
+		
+		rdbtnProcesso.setBounds(123, 13, 109, 23);
+		frmRelatorios.getContentPane().add(rdbtnProcesso);
+		
+		
+		rdbtnAforamento.setBounds(245, 13, 109, 23);
+		frmRelatorios.getContentPane().add(rdbtnAforamento);
 	}
 
+	public JTextField getTxtBusca() {
+		return txtBusca;
+	}
+
+	public void setTxtBusca(JTextField txtBusca) {
+		this.txtBusca = txtBusca;
+	}
+
+	public JTable getTable() {
+		return table;
+	}
+
+	public void setTable(JTable table) {
+		this.table = table;
+	}
+
+	public JRadioButton getRdbtnAforamento() {
+		return rdbtnAforamento;
+	}
+
+	public void setRdbtnAforamento(JRadioButton rdbtnAforamento) {
+		this.rdbtnAforamento = rdbtnAforamento;
+	}
+
+	public JRadioButton getRdbtnProcesso() {
+		return rdbtnProcesso;
+	}
+
+	public void setRdbtnProcesso(JRadioButton rdbtnProcesso) {
+		this.rdbtnProcesso = rdbtnProcesso;
+	}
+
+	public void mostraTela() {
+		frmRelatorios.setVisible(true);
+	}
 }

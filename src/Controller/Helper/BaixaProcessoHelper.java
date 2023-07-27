@@ -1,14 +1,33 @@
 package Controller.Helper;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.util.Units;
+import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
+import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFHeader;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
+
+import DAO.AforamentoDAO;
 import DAO.PrefeitoDAO;
 import Model.Aforamento;
+import Model.Cemiterio;
 import Model.Prefeito;
 import Model.Processo;
 import VIEW.TelaBaixaProcesso;
@@ -92,26 +111,24 @@ public class BaixaProcessoHelper {
 		view.getTxtFolha().setText("");
 		view.getTxtLivro().setText("");
 		view.getTxtObservacao().setText("");
-		view.getCmbbxPrefeito().setSelectedItem(null);
+		view.getCmbbxProcesso().setSelectedItem(null);
 		view.getCmbbxPrefeito().setSelectedItem(null);
 		
 	}
 
-	public void preencheTela(Aforamento aforamento) {
-		Prefeito prefeito = new Prefeito();
-		PrefeitoDAO prefeitoDAO = new PrefeitoDAO();
-		
-		int numeroProcesso = aforamento.getNumeroProcesso();
-		Prefeito codigoPrefeito = prefeitoDAO.findById(aforamento.getCodigoPrefeito());
+	public void preencheTela(Aforamento aforamento, Prefeito prefeito, Processo processo) {
 		String observação = aforamento.getObservacoes();
 		int numeroAforamento = aforamento.getNumeroAforamento();
 		Date data = aforamento.getDataAforamento();
 		String folha = aforamento.getFolha();
 		String livro = aforamento.getLivro();
 		String situacao = aforamento.getSituacao();
+		
+		DefaultComboBoxModel comboBoxPrefeito = (DefaultComboBoxModel) view.getCmbbxPrefeito().getModel();
+		DefaultComboBoxModel comboBoxProcesso = (DefaultComboBoxModel) view.getCmbbxProcesso().getModel();
 
-		view.getCmbbxProcesso().setSelectedItem(numeroProcesso);
-		view.getCmbbxPrefeito().setSelectedItem(codigoPrefeito.getNome());
+		comboBoxProcesso.setSelectedItem(processo);
+		comboBoxPrefeito.setSelectedItem(prefeito);
 		view.getTxtAforamento().setText(Integer.toString(numeroAforamento));
 		view.getDataAforamento().setDate(data);
 		view.getTxtFolha().setText(folha);
@@ -126,5 +143,142 @@ public class BaixaProcessoHelper {
 		return valor;
 	}
 
+	public void setarTableSorter() {
+		DefaultTableModel modelo = (DefaultTableModel) view.getTable().getModel();
+		TableRowSorter<DefaultTableModel> tableSorter = new TableRowSorter<DefaultTableModel>(modelo);
+		view.getTable().setRowSorter(tableSorter);
+	}
 
+	public String preparaString(){
+		String texto = "TA MALUCO MANO";
+		return texto;
+	}
+	
+	public void imprimir(Aforamento aforamento, Processo processo, Cemiterio cemiterio, Prefeito prefeito){
+		
+		try {
+			
+		XWPFDocument documento = new XWPFDocument();
+		XWPFHeaderFooterPolicy headerFooterPolicy = documento.createHeaderFooterPolicy();
+		XWPFHeader header = headerFooterPolicy.createHeader(XWPFHeaderFooterPolicy.DEFAULT);
+		String imagePath = "C:\\Users\\PMPP\\eclipse-workspace\\aforamento\\src\\Style\\PP_logo.png\"";
+		XWPFParagraph headerParagraph = header.createParagraph();
+		XWPFRun headerRun = headerParagraph.createRun();
+			try {
+				headerRun.addPicture(new FileInputStream(imagePath), XWPFDocument.PICTURE_TYPE_JPEG, imagePath, Units.toEMU(50), Units.toEMU(50));
+			} catch (InvalidFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		
+		XWPFParagraph paragraph = documento.createParagraph();
+		XWPFParagraph paragraphT = documento.createParagraph();
+		XWPFRun run = paragraph.createRun();
+		XWPFRun runT = paragraphT.createRun();
+		int numeroAforamento = aforamento.getNumeroAforamento();
+		String requerente = processo.getRequerente();
+		String medida = processo.getMedida();
+		String estaca = processo.getEstaca();
+		String quadra = processo.getQuadra();
+		String nomeCemiterio = cemiterio.getNome();
+		int numeroProcesso = processo.getNumeroProcesso();
+		String nomePrefeito = prefeito.getNome();
+		String folha = aforamento.getFolha();
+		String livro = aforamento.getLivro();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd  MMMMMM  yyyy");
+		Date data = new Date();
+		
+		
+		
+		
+		String paragrafo1 = "TÍTULO DE AFORAMENTO";
+		paragraph.setAlignment(ParagraphAlignment.CENTER);
+		run.setBold(true);
+		run.setFontSize(18);
+		run.addBreak();
+		run.addBreak();
+		run.setText(paragrafo1);
+		run.addBreak();
+		run.addBreak();
+		
+		
+		paragraphT.setAlignment(ParagraphAlignment.RIGHT);
+		runT.setBold(true);
+		runT.setFontSize(18);
+		runT.setText(Integer.toString(numeroAforamento));
+		runT.addBreak();
+		runT.addBreak();
+		
+		
+		XWPFParagraph paragraph2 = documento.createParagraph();
+		XWPFRun run2 = paragraph2.createRun();
+		
+		XWPFParagraph paragraph3 = documento.createParagraph();
+		XWPFRun run3 = paragraph3.createRun();
+		
+		XWPFParagraph paragraph4 = documento.createParagraph();
+		XWPFRun run4 = paragraph4.createRun();
+		
+		String paragrafo2 = "O Prefeito do Município de Ponta Porã, pelo presente Título de Aforamento Perpétuo, concede a " + requerente;
+		String paragrafo3 = "Em obediência a Lei Nº 535 de 12 de novembro de 1956 a área "+ medida;
+		String paragrafo4 = " na estaca "+ estaca +" da quadra "+ quadra +", no cemitério municipal, "+ nomeCemiterio; 
+		String paragrafo5 = " onde encontra-se sepultado os restos mortais de para futuro falecimento. ";
+		String paragrafo6 = "Decorre esta concessão do processo Nº "+ numeroProcesso;
+		String paragrafo7 = ", na Secretaria Geral, ocorreu o trâmite legal. ";
+		String paragrafo8 = "Registrado à folha "+ folha + " do livro de Registro Nº "+livro;
+		String paragrafo9 = "Ponta Porã (MS), "+ sdf.format(data)+".";
+		String paragrafo10 = "_____________________________________________";
+		String paragrafo11 = nomePrefeito;
+		
+		paragraph2.setWordWrap(true);
+		run2.addTab();
+		run2.setText(paragrafo2);
+		run2.addBreak();
+		run2.addBreak();
+		run2.addBreak();
+		run2.addBreak();
+		
+		//run3.addTab();
+		
+		run2.setText(paragrafo3);
+		run2.setText(paragrafo4);
+		run2.setText(paragrafo5);
+		run2.addBreak();
+		run2.addBreak();
+		run2.addBreak();
+		run2.addBreak();
+		run2.setText(paragrafo6);
+		run2.setText(paragrafo7);
+		run2.addBreak();
+		run2.addBreak();
+		run2.addBreak();
+		run2.addBreak();
+		
+		paragraph3.setAlignment(ParagraphAlignment.CENTER);
+		run3.setText(paragrafo8);
+		run3.addBreak();
+		run3.addBreak();
+		run3.addBreak();
+		run3.addBreak();
+		run3.setText(paragrafo9);
+		run3.addBreak();
+		
+		paragraph4.setAlignment(ParagraphAlignment.CENTER);
+		run4.setText(paragrafo10);
+		run4.addBreak();
+		run4.addBreak();
+		run4.setText(paragrafo11);
+		
+		
+		FileOutputStream out = new FileOutputStream("dados.docx");
+		documento.write(out);
+		out.close();
+		
+		}catch (IOException e) {
+			// TODO: handle exception
+		}
+	  }
+	 
+	
 }

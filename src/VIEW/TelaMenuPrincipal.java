@@ -117,17 +117,13 @@ public class TelaMenuPrincipal {
 		mnRelatorios.setFont(new Font("Segoe UI", Font.BOLD, 14));
 		menuBar.add(mnRelatorios);
 		
-		JMenuItem mntmRelatorioTituloAforamento = new JMenuItem("Titulo de Aforamento");
-		mnRelatorios.add(mntmRelatorioTituloAforamento);
-		
-		JMenuItem mntmRelatorioPrefeito = new JMenuItem("Relatório Prefeitos");
-		mnRelatorios.add(mntmRelatorioPrefeito);
-		
-		JMenuItem mntmRelatorioProcessos = new JMenuItem("Relatório Processos");
-		mnRelatorios.add(mntmRelatorioProcessos);
-		
-		JMenuItem mntmRelatorioCemiterio = new JMenuItem("Relatório Cemiterios");
-		mnRelatorios.add(mntmRelatorioCemiterio);
+		JMenuItem mntmRelatorio = new JMenuItem("Relatório");
+		mntmRelatorio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.relatorio();
+			}
+		});
+		mnRelatorios.add(mntmRelatorio);
 		frmMenuPrincipal.getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Sistema de Aforamentos");
@@ -190,5 +186,4 @@ public class TelaMenuPrincipal {
 	public void mostraTela() {
 		this.frmMenuPrincipal.setVisible(true);
 	}
-
 }

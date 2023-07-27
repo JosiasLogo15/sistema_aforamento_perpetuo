@@ -64,7 +64,8 @@ public class AforamentoDAO implements interfaceDAO<Aforamento> {
 			data = aforamento.getDataAforamento();
 			datasql = new java.sql.Date(data.getTime());
 			conn = conexao.obterConexao();
-			sql = "UPDATE aforamento SET codigo_prefeito = ?, observacoes = ?, data_aforamento = ?, folha = ?, livro = ?, situacao = ?  WHERE numero_aforamento = ?";
+			sql = "UPDATE aforamento SET codigo_prefeito = ?, observacoes = ?, "
+					+ "data_aforamento = ?, folha = ?, livro = ?, situacao = ?  WHERE numero_aforamento = ?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, aforamento.getCodigoPrefeito());
 			stmt.setString(2, aforamento.getObservacoes());

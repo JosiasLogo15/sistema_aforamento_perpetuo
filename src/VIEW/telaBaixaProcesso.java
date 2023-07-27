@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
@@ -58,6 +60,8 @@ public class TelaBaixaProcesso {
 		controller.listaCmbBoxProcessos();
 		controller.listaCmbBoxPrefeitos();
 		controller.listaAforamentos();
+		controller.limpaTela();
+		controller.setarTableSorter();
 	}
 
 	/**
@@ -141,16 +145,22 @@ public class TelaBaixaProcesso {
 		frmBaixaProcesso.getContentPane().add(btnBaixa);
 		
 		JButton btnAlterar = new JButton("Alterar");
-		btnAlterar.setBounds(138, 238, 89, 23);
+		btnAlterar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.atualizar();
+			}
+		});
+		btnAlterar.setBounds(191, 238, 89, 23);
 		frmBaixaProcesso.getContentPane().add(btnAlterar);
 		
-		JButton btnExcluir = new JButton("Exluir");
-		btnExcluir.setBounds(263, 238, 89, 23);
+		JButton btnExcluir = new JButton("Excluir");
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.excluir();
+			}
+		});
+		btnExcluir.setBounds(369, 238, 89, 23);
 		frmBaixaProcesso.getContentPane().add(btnExcluir);
-		
-		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.setBounds(384, 238, 89, 23);
-		frmBaixaProcesso.getContentPane().add(btnBuscar);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 266, 490, 232);
@@ -181,6 +191,19 @@ public class TelaBaixaProcesso {
 				return columnEditables[column];
 			}
 		});
+		
+		JButton btnVisualizar = new JButton("vi");
+		btnVisualizar.setBounds(419, 204, 43, 23);
+		frmBaixaProcesso.getContentPane().add(btnVisualizar);
+		
+		JButton btnImprimir = new JButton("im");
+		btnImprimir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.imprimir();
+			}
+		});
+		btnImprimir.setBounds(419, 163, 43, 23);
+		frmBaixaProcesso.getContentPane().add(btnImprimir);
 	}
 
 	public JTextField getTxtAforamento() {
@@ -249,5 +272,16 @@ public class TelaBaixaProcesso {
 
 	public void mostraTela() {
 		frmBaixaProcesso.setVisible(true);
+	}
+
+	public void exibeMensagem(String mensagem) {
+		JOptionPane.showMessageDialog(cmbbxPrefeito, mensagem);
+	}
+	public int mensagemConfirmacao(String mensagem, String titulo, int tipoMensagem) {
+		return JOptionPane.showConfirmDialog(cmbbxPrefeito, mensagem, titulo, tipoMensagem);
+	}
+	
+	public void errorMensagem(String mensagem, String titulo, Object tipoMensagem) {
+		JOptionPane.showConfirmDialog(cmbbxPrefeito, mensagem, titulo, (int) tipoMensagem);
 	}
 }
