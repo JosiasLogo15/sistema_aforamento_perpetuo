@@ -36,11 +36,7 @@ public class CemiterioDAO implements interfaceDAO<Cemiterio>{
 		}catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao inserir os dados: " + e);
 		}finally {
-			try {
-				conexao.fecharConexao(conn);
-			} catch (Exception e2) {
-				//Escrever Log no arquivo de Log
-			}
+			fechaConexoes(conn, stmt, rs);
 		}
 	}
 	@Override
@@ -57,11 +53,7 @@ public class CemiterioDAO implements interfaceDAO<Cemiterio>{
 		}catch(SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao fazer a alteração: " + e);
 		} finally {
-			try {
-				conexao.fecharConexao(conn);
-			} catch (Exception e2) {
-				//Escrever Log no arquivo de Log
-			}
+			fechaConexoes(conn, stmt, rs);
 		}
 		
 	}
@@ -77,11 +69,7 @@ public class CemiterioDAO implements interfaceDAO<Cemiterio>{
 		}catch(SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao deletar o registro: "+ e);
 		} finally {
-			try {
-				conexao.fecharConexao(conn);
-			} catch (SQLException e2) {
-				// Escrever log no arquivo de log
-			}
+			fechaConexoes(conn, stmt, rs);
 		}
 		
 	}
@@ -108,19 +96,9 @@ public class CemiterioDAO implements interfaceDAO<Cemiterio>{
 			
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao buscar os registros " + e);
-			try {
-				conexao.fecharConexao(conn);
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}/*finally {
-			try {
-				conexao.fecharConexao(conn);
-			} catch (SQLException e2) {
-				//Escrever log no arquivo de log
-			}
-		}*/
+		}finally {
+			fechaConexoes(conn, stmt, rs);
+		}
 		return listaCemiterio;
 	}
 	
@@ -147,19 +125,9 @@ public class CemiterioDAO implements interfaceDAO<Cemiterio>{
 			
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao buscar os registros " + e);
-			try {
-				conexao.fecharConexao(conn);
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}/*finally {
-			try {
-				conexao.fecharConexao(conn);
-			} catch (SQLException e2) {
-				//Escrever log no arquivo de log
-			}
-		}*/
+		}finally {
+			fechaConexoes(conn, stmt, rs);
+		}
 		return listaCemiterio;
 	}
 
@@ -183,13 +151,19 @@ public class CemiterioDAO implements interfaceDAO<Cemiterio>{
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null,"Ocorreu um erro ao buscar o registro pelo codigo informado " + e);
 		}finally {
-			try {
-				conexao.fecharConexao(conn);
-			} catch (SQLException e2) {
-				//Escrever log no arquivo de log
-			}
+			fechaConexoes(conn, stmt, rs);
 		}
 		return cemiterio;
+	}
+	private void fechaConexoes(Connection conn, PreparedStatement stmt, ResultSet rs) {
+		try {
+			rs.close();
+			stmt.close();
+			conexao.fecharConexao(conn);
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
 	}
 
 }

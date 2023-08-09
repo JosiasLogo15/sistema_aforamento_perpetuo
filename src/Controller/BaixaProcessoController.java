@@ -1,6 +1,7 @@
 package Controller;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JOptionPane;
 
@@ -92,7 +93,7 @@ public class BaixaProcessoController {
 	}
 
 	public void excluir() {
-		int opcao = view.mensagemConfirmacao("MENSAGEM DE CONFIRMAÇÃO", "CONFIRMAÇÃO", JOptionPane.YES_NO_OPTION);
+		int opcao = view.mensagemConfirmacao("Deseja realizar a exclusão do registro " + aforamento.getNumeroAforamento(), "ATENTION", JOptionPane.YES_NO_OPTION);
 		if(opcao == JOptionPane.YES_OPTION) {
 			aforamento = helper.obterModelo();
 			aforamentoDAO.delete(aforamento);
@@ -112,11 +113,39 @@ public class BaixaProcessoController {
 	}
 
 	public void imprimir(){
-		aforamento = helper.obterModelo();
-		processo = processoDAO.findById(aforamento.getNumeroProcesso());
-		Cemiterio cemiterio = cemiterioDAO.findById(processo.getCodigoCemiterio());
-		Prefeito prefeito = prefeitoDAO.findById(aforamento.getCodigoPrefeito());
-		helper.imprimir(aforamento, processo, cemiterio, prefeito);
+		if(helper.camposVazios()) {
+			view.errorMensagem("SELECIONE UM PROCESSO PARA A IMPRESSÃO", "ATENTION", JOptionPane.WARNING_MESSAGE);
+		}else {
+			aforamento = helper.obterModelo();
+			processo = processoDAO.findById(aforamento.getNumeroProcesso());
+			Cemiterio cemiterio = cemiterioDAO.findById(processo.getCodigoCemiterio());
+			Prefeito prefeito = prefeitoDAO.findById(aforamento.getCodigoPrefeito());
+			helper.escreveDocumento(aforamento, processo, cemiterio, prefeito);
+		try {
+			TimeUnit.SECONDS.sleep(10);
+			helper.limpaArquivo();
+		} catch (InterruptedException | IOException e) {
+			view.errorMensagem("Ocorreu um erro ao imprimir o arquivo", "ERROR", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
+		}
+	}
+	
+	private boolean camposVazios(Aforamento aforamento) {
+		if(aforamento.getNumeroAforamento() == 0 || aforamento.getCodigoPrefeito() == 0 || 
+				aforamento.getNumeroAforamento() == 0 || aforamento.getDataAforamento() == null || 
+				aforamento.getFolha() == null || aforamento.getLivro() == null) {
+			return true;
+		}
+		return false;
 	}
 
+	public void limpaArquivo() {
+		try {
+			helper.limpaArquivo();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

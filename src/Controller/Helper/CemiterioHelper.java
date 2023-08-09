@@ -5,6 +5,7 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 import Model.Cemiterio;
+import Model.Prefeito;
 import VIEW.TelaCadastroCemiterio;
 
 public class CemiterioHelper {
@@ -16,9 +17,9 @@ public class CemiterioHelper {
 	
 	public Cemiterio obterModelo() {
 		Cemiterio cemiterio = new Cemiterio();
-		String nome = view.getTxtNome().getText();
-		String endereco = view.getTxtEndereco().getText();
-		String bairro = view.getTxtBairro().getText();
+		String nome = view.getTxtNome().getText().toUpperCase();
+		String endereco = view.getTxtEndereco().getText().toUpperCase();
+		String bairro = view.getTxtBairro().getText().toUpperCase();
 		
 		cemiterio.setNome(nome);
 		cemiterio.setEndereco(endereco);
@@ -26,6 +27,7 @@ public class CemiterioHelper {
 		
 		return cemiterio;
 	}
+	
 	
 	public void limpaTela() {
 		view.getTxtNome().setText("");

@@ -29,9 +29,8 @@ public class EntradaProcessoController {
 		}
 	}
 
-	private void limpaTela() {
+	public void limpaTela() {
 		helper.limpaTela();
-		
 	}
 
 	public void listaComboBox() {
@@ -83,6 +82,6 @@ public class EntradaProcessoController {
 		helper.buscar();
 		
 	}
-	
+
 	
 }

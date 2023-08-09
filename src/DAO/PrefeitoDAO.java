@@ -43,11 +43,7 @@ public class PrefeitoDAO implements interfaceDAO<Prefeito>{
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao inserir o aforamento: " + e);
 		}finally {
-			try {
-				conexao.fecharConexao(conn);
-			} catch (SQLException e2) {
-				//Escrever log no arquivo de log
-			}
+			fechaConexoes(conn, stmt, rs);
 		}
 		
 	}
@@ -72,11 +68,7 @@ public class PrefeitoDAO implements interfaceDAO<Prefeito>{
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao alterar o registro: " + e);
 		} finally {
-			try {
-				conexao.fecharConexao(conn);
-			} catch (SQLException e2) {
-				//Escrever log no arquivo de log
-			}
+			fechaConexoes(conn, stmt, rs);
 		}
 		
 	}
@@ -92,11 +84,7 @@ public class PrefeitoDAO implements interfaceDAO<Prefeito>{
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao deletar o registro: " + e);
 		}finally {
-			try {
-				conexao.fecharConexao(conn);
-			} catch (SQLException e2) {
-				// Escrver log no arquivo de log
-			}
+			fechaConexoes(conn, stmt, rs);
 		}
 		
 	}
@@ -124,11 +112,7 @@ public class PrefeitoDAO implements interfaceDAO<Prefeito>{
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao buscar os registros: " + e);
 		}finally {
-			try {
-				conexao.fecharConexao(conn);
-			} catch (SQLException e2) {
-				// Escrever log no arquivo de log
-			}
+			fechaConexoes(conn, stmt, rs);
 		}
 		return listaPrefeitos;
 	}
@@ -151,13 +135,19 @@ public class PrefeitoDAO implements interfaceDAO<Prefeito>{
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao buscar o registro: " + e);
 		}finally {
-			try {
-				conexao.fecharConexao(conn);
-			} catch (SQLException e2) {
-				// Escrever log no arquivo de log
-			}
+			fechaConexoes(conn, stmt, rs);
 		}
 		return prefeito;
+	}
+	private void fechaConexoes(Connection conn, PreparedStatement stmt, ResultSet rs) {
+		try {
+			rs.close();
+			stmt.close();
+			conexao.fecharConexao(conn);
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
 	}
 
 	

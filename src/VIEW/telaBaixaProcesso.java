@@ -22,6 +22,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.ImageIcon;
 
 public class TelaBaixaProcesso {
 
@@ -78,6 +79,7 @@ public class TelaBaixaProcesso {
 		lblNewLabel.setBounds(10, 39, 85, 14);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
 		frmBaixaProcesso.getContentPane().add(lblNewLabel);
+		cmbbxProcesso.setToolTipText("Selecione o Nº de Processo");
 		cmbbxProcesso.setBounds(102, 37, 85, 22);
 		frmBaixaProcesso.getContentPane().add(cmbbxProcesso);
 		
@@ -87,6 +89,7 @@ public class TelaBaixaProcesso {
 		frmBaixaProcesso.getContentPane().add(lblNewLabel_1);
 		
 		txtAforamento = new JTextField();
+		txtAforamento.setToolTipText("Digite o Nº de Aforamento");
 		txtAforamento.setBounds(361, 39, 97, 20);
 		frmBaixaProcesso.getContentPane().add(txtAforamento);
 		txtAforamento.setColumns(10);
@@ -104,6 +107,7 @@ public class TelaBaixaProcesso {
 		lblNewLabel_1_1.setBounds(246, 82, 141, 14);
 		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		frmBaixaProcesso.getContentPane().add(lblNewLabel_1_1);
+		dataAforamento.setToolTipText("Digite ou selecione a data do Aforamento");
 		dataAforamento.setDateFormatString("dd'/'MM'/'y");
 		dataAforamento.setBounds(392, 80, 108, 20);
 		frmBaixaProcesso.getContentPane().add(dataAforamento);
@@ -112,6 +116,7 @@ public class TelaBaixaProcesso {
 		lblNewLabel_3.setBounds(246, 129, 121, 14);
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 14));
 		frmBaixaProcesso.getContentPane().add(lblNewLabel_3);
+		cmbbxPrefeito.setToolTipText("Selecione o Prefeito");
 		cmbbxPrefeito.setBounds(373, 127, 127, 22);
 		frmBaixaProcesso.getContentPane().add(cmbbxPrefeito);
 		
@@ -121,6 +126,7 @@ public class TelaBaixaProcesso {
 		frmBaixaProcesso.getContentPane().add(lblNewLabel_3_1);
 		
 		txtLivro = new JTextField();
+		txtLivro.setToolTipText("Digite o Livro do Aforamento");
 		txtLivro.setBounds(290, 164, 86, 20);
 		txtLivro.setColumns(10);
 		frmBaixaProcesso.getContentPane().add(txtLivro);
@@ -131,12 +137,15 @@ public class TelaBaixaProcesso {
 		frmBaixaProcesso.getContentPane().add(lblNewLabel_3_1_1);
 		
 		txtFolha = new JTextField();
+		txtFolha.setToolTipText("Digite a Folha do Aforamento");
 		txtFolha.setBounds(290, 190, 86, 20);
 		txtFolha.setColumns(10);
 		frmBaixaProcesso.getContentPane().add(txtFolha);
 		
 		JButton btnBaixa = new JButton("Baixa");
-		btnBaixa.setBounds(10, 238, 89, 23);
+		btnBaixa.setToolTipText("Clique aqui para dar baixa no Processo de Aforamento");
+		btnBaixa.setIcon(new ImageIcon(TelaBaixaProcesso.class.getResource("/Style/ICONS/Save_icon.png")));
+		btnBaixa.setBounds(10, 226, 121, 35);
 		btnBaixa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.baixaProcesso();
@@ -145,21 +154,25 @@ public class TelaBaixaProcesso {
 		frmBaixaProcesso.getContentPane().add(btnBaixa);
 		
 		JButton btnAlterar = new JButton("Alterar");
+		btnAlterar.setToolTipText("Clique aqui para alterar algum dado do Aforamento");
+		btnAlterar.setIcon(new ImageIcon(TelaBaixaProcesso.class.getResource("/Style/ICONS/Update_icon.png")));
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.atualizar();
 			}
 		});
-		btnAlterar.setBounds(191, 238, 89, 23);
+		btnAlterar.setBounds(141, 226, 106, 35);
 		frmBaixaProcesso.getContentPane().add(btnAlterar);
 		
 		JButton btnExcluir = new JButton("Excluir");
+		btnExcluir.setToolTipText("Clique aqui para Excluir o aforamento selecionado");
+		btnExcluir.setIcon(new ImageIcon(TelaBaixaProcesso.class.getResource("/Style/ICONS/Erase_icon.png")));
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.excluir();
 			}
 		});
-		btnExcluir.setBounds(369, 238, 89, 23);
+		btnExcluir.setBounds(256, 226, 116, 35);
 		frmBaixaProcesso.getContentPane().add(btnExcluir);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -192,18 +205,27 @@ public class TelaBaixaProcesso {
 			}
 		});
 		
-		JButton btnVisualizar = new JButton("vi");
-		btnVisualizar.setBounds(419, 204, 43, 23);
-		frmBaixaProcesso.getContentPane().add(btnVisualizar);
-		
-		JButton btnImprimir = new JButton("im");
+		JButton btnImprimir = new JButton("");
+		btnImprimir.setToolTipText("Clique aqui para imprimir o aforamento");
+		btnImprimir.setIcon(new ImageIcon(TelaBaixaProcesso.class.getResource("/Style/ICONS/Scan_icon.png")));
 		btnImprimir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.imprimir();
 			}
 		});
-		btnImprimir.setBounds(419, 163, 43, 23);
+		btnImprimir.setBounds(417, 176, 56, 29);
 		frmBaixaProcesso.getContentPane().add(btnImprimir);
+		
+		JButton btnLimpar = new JButton("Limpar");
+		btnLimpar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.limpaTela();
+			}
+		});
+		btnLimpar.setIcon(new ImageIcon(TelaBaixaProcesso.class.getResource("/Style/ICONS/eraser.png")));
+		btnLimpar.setToolTipText("Clique aqui para Excluir o aforamento selecionado");
+		btnLimpar.setBounds(384, 226, 116, 35);
+		frmBaixaProcesso.getContentPane().add(btnLimpar);
 	}
 
 	public JTextField getTxtAforamento() {
@@ -275,13 +297,13 @@ public class TelaBaixaProcesso {
 	}
 
 	public void exibeMensagem(String mensagem) {
-		JOptionPane.showMessageDialog(cmbbxPrefeito, mensagem);
+		JOptionPane.showMessageDialog(frmBaixaProcesso, mensagem);
 	}
 	public int mensagemConfirmacao(String mensagem, String titulo, int tipoMensagem) {
-		return JOptionPane.showConfirmDialog(cmbbxPrefeito, mensagem, titulo, tipoMensagem);
+		return JOptionPane.showConfirmDialog(frmBaixaProcesso, mensagem, titulo, tipoMensagem);
 	}
 	
-	public void errorMensagem(String mensagem, String titulo, Object tipoMensagem) {
-		JOptionPane.showConfirmDialog(cmbbxPrefeito, mensagem, titulo, (int) tipoMensagem);
+	public void errorMensagem(String mensagem, String titulo, int tipoMensagem) {
+		JOptionPane.showMessageDialog(frmBaixaProcesso, mensagem, titulo, tipoMensagem);
 	}
 }

@@ -15,6 +15,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
 
 public class TelaCadastroUsuario {
 
@@ -68,21 +69,22 @@ public class TelaCadastroUsuario {
 		
 		JLabel lblNewLabel_1 = new JLabel("Senha:");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_1.setBounds(10, 131, 48, 14);
+		lblNewLabel_1.setBounds(10, 115, 48, 14);
 		frmCadastroDeUsurio.getContentPane().add(lblNewLabel_1);
 		
 		psswdSenha = new JPasswordField();
-		psswdSenha.setBounds(65, 128, 142, 20);
+		psswdSenha.setBounds(65, 112, 142, 20);
 		frmCadastroDeUsurio.getContentPane().add(psswdSenha);
 		
 		JButton btnCadastrar = new JButton("Cadastrar");
+		btnCadastrar.setIcon(new ImageIcon(TelaCadastroUsuario.class.getResource("/Style/ICONS/Save_icon.png")));
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				controller.cadastrar();
 			}
 		});
-		btnCadastrar.setBounds(73, 183, 89, 23);
+		btnCadastrar.setBounds(48, 165, 142, 41);
 		frmCadastroDeUsurio.getContentPane().add(btnCadastrar);
 		
 		

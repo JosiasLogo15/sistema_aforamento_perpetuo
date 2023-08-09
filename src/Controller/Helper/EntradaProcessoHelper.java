@@ -103,8 +103,11 @@ public class EntradaProcessoHelper {
 		view.getTxtMedida().setText("");
 		view.getDataEntrada().setDate(null);
 		view.getTxtNacionalidade().setText("");
-		view.getCmbbxCemiterio().setSelectedIndex(0);
+		view.getCmbbxCemiterio().setSelectedItem(null);
 		
+		if(view.getTxtNumeroProcesso().isEditable() == false) {
+			view.getTxtNumeroProcesso().setEditable(true);
+		}
 	}
 
 	public int capturaValor() {
@@ -129,6 +132,8 @@ public class EntradaProcessoHelper {
 		String nacionalidade = processo.getNacionalidade();
 		Cemiterio cemiterio = cemiterioDAO.findById(processo.getCodigoCemiterio());
 		
+		DefaultComboBoxModel comboBox = (DefaultComboBoxModel) view.getCmbbxCemiterio().getModel();
+		
 		view.getTxtNumeroProcesso().setText(numeroProcesso);
 		view.getTxtRequerente().setText(requerente);
 		view.getTxtFalecido().setText(falecido);
@@ -140,7 +145,7 @@ public class EntradaProcessoHelper {
 		view.getTxtMedida().setText(medida);
 		view.getDataEntrada().setDate(dataEntrada);
 		view.getTxtNacionalidade().setText(nacionalidade);
-		view.getCmbbxCemiterio().setSelectedItem(cemiterio.getNome());
+		comboBox.setSelectedItem(cemiterio);
 		
 	}
 

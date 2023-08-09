@@ -7,7 +7,6 @@ import VIEW.TelaCadastroPrefeito;
 import VIEW.TelaCadastroUsuario;
 import VIEW.TelaEntradaProcesso;
 import VIEW.TelaMenuPrincipal;
-import VIEW.TelaRelatorio;
 
 public class MenuController {
 	private final TelaMenuPrincipal view;
@@ -16,7 +15,7 @@ public class MenuController {
 	private final TelaCadastroUsuario usuarioView;
 	private final TelaEntradaProcesso entradaProcessoView;
 	private final TelaBaixaProcesso baixaProcessoView;
-	private final TelaRelatorio relatorioView;
+	private final MenuHelper helper;
 	
 	public MenuController(TelaMenuPrincipal view) {
 		this.view = view;
@@ -25,7 +24,7 @@ public class MenuController {
 		this.usuarioView = new TelaCadastroUsuario();
 		this.entradaProcessoView = new TelaEntradaProcesso();
 		this.baixaProcessoView = new TelaBaixaProcesso();
-		this.relatorioView = new TelaRelatorio();
+		this.helper = new MenuHelper(view);
 	}
 	
 	public void cadastraCemiterio() {
@@ -48,8 +47,13 @@ public class MenuController {
 		baixaProcessoView.mostraTela();
 	}
 
-	public void relatorio() {
-		relatorioView.mostraTela();
+	public void preencheInfo() {
+		helper.preencheInfo();
+	}
+
+	public void abrirSite() {
+		helper.abrirSite();
+		
 	}
 	
 	

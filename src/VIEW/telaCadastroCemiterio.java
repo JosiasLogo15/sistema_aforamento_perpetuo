@@ -19,6 +19,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.ListSelectionModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.ImageIcon;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.Window.Type;
 
 public class TelaCadastroCemiterio {
 
@@ -32,6 +36,7 @@ public class TelaCadastroCemiterio {
 	private JButton btnAlterar;
 	private JScrollPane scrollPane;
 	private CemiterioController controller;
+	private JButton btnLimpar;
 	/**
 	 * Launch the application.
 	 */
@@ -62,8 +67,9 @@ public class TelaCadastroCemiterio {
 	 */
 	private void initialize() {
 		frmCadastroDeCemitrios = new JFrame();
+		frmCadastroDeCemitrios.setType(Type.POPUP);
 		frmCadastroDeCemitrios.setTitle("Cadastro de Cemitérios");
-		frmCadastroDeCemitrios.setBounds(100, 100, 605, 392);
+		frmCadastroDeCemitrios.setBounds(100, 100, 552, 392);
 		frmCadastroDeCemitrios.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmCadastroDeCemitrios.getContentPane().setLayout(null);
 		
@@ -73,7 +79,7 @@ public class TelaCadastroCemiterio {
 		frmCadastroDeCemitrios.getContentPane().add(lblNomeCemiterio);
 		
 		txtNome = new JTextField();
-		txtNome.setBounds(66, 41, 404, 20);
+		txtNome.setBounds(66, 41, 460, 20);
 		frmCadastroDeCemitrios.getContentPane().add(txtNome);
 		txtNome.setColumns(10);
 		
@@ -83,7 +89,7 @@ public class TelaCadastroCemiterio {
 		frmCadastroDeCemitrios.getContentPane().add(lblEndereco);
 		
 		txtEndereco = new JTextField();
-		txtEndereco.setBounds(87, 94, 383, 20);
+		txtEndereco.setBounds(87, 94, 439, 20);
 		frmCadastroDeCemitrios.getContentPane().add(txtEndereco);
 		txtEndereco.setColumns(10);
 		
@@ -93,12 +99,12 @@ public class TelaCadastroCemiterio {
 		frmCadastroDeCemitrios.getContentPane().add(lblBairro);
 		
 		txtBairro = new JTextField();
-		txtBairro.setBounds(66, 148, 404, 20);
+		txtBairro.setBounds(66, 148, 460, 20);
 		frmCadastroDeCemitrios.getContentPane().add(txtBairro);
 		txtBairro.setColumns(10);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 239, 569, 103);
+		scrollPane.setBounds(10, 239, 522, 103);
 		frmCadastroDeCemitrios.getContentPane().add(scrollPane);
 		
 		table = new JTable();
@@ -110,7 +116,6 @@ public class TelaCadastroCemiterio {
 				}
 			}
 		});
-		table.setCellSelectionEnabled(true);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(table);
 		table.setModel(new DefaultTableModel(
@@ -134,31 +139,44 @@ public class TelaCadastroCemiterio {
 		table.getColumnModel().getColumn(3).setPreferredWidth(170);
 		
 		btnCadastrar = new JButton("Cadastrar");
+		btnCadastrar.setIcon(new ImageIcon(TelaCadastroCemiterio.class.getResource("/Style/ICONS/Save_icon.png")));
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.cadastrar();
 			}
 		});
-		btnCadastrar.setBounds(10, 192, 108, 23);
+		btnCadastrar.setBounds(10, 192, 123, 36);
 		frmCadastroDeCemitrios.getContentPane().add(btnCadastrar);
 		
 		btnExcluir = new JButton("Excluir");
+		btnExcluir.setIcon(new ImageIcon(TelaCadastroCemiterio.class.getResource("/Style/ICONS/Erase_icon.png")));
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.excluir();
 			}
 		});
-		btnExcluir.setBounds(128, 192, 89, 23);
+		btnExcluir.setBounds(143, 192, 123, 36);
 		frmCadastroDeCemitrios.getContentPane().add(btnExcluir);
 		
 		btnAlterar = new JButton("Alterar");
+		btnAlterar.setIcon(new ImageIcon(TelaCadastroCemiterio.class.getResource("/Style/ICONS/Update_icon.png")));
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.alterar();
 			}
 		});
-		btnAlterar.setBounds(227, 192, 89, 23);
+		btnAlterar.setBounds(276, 192, 123, 36);
 		frmCadastroDeCemitrios.getContentPane().add(btnAlterar);
+		
+		btnLimpar = new JButton("Limpar");
+		btnLimpar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.limpaTela();
+			}
+		});
+		btnLimpar.setIcon(new ImageIcon(TelaCadastroCemiterio.class.getResource("/Style/ICONS/eraser.png")));
+		btnLimpar.setBounds(409, 192, 117, 36);
+		frmCadastroDeCemitrios.getContentPane().add(btnLimpar);
 	}
 	
 	public JTable getTable() {
@@ -203,5 +221,12 @@ public class TelaCadastroCemiterio {
 	
 	public void exibeMensagem(String Mensagem) {
 		JOptionPane.showMessageDialog(frmCadastroDeCemitrios, Mensagem);
+	}
+	public int mensagemConfirmacao(String mensagem, String titulo, int tipoMensagem) {
+		return JOptionPane.showConfirmDialog(frmCadastroDeCemitrios, mensagem, titulo, tipoMensagem);
+	}
+	
+	public void errorMensagem(String mensagem, String titulo, int tipoMensagem) {
+		JOptionPane.showMessageDialog(frmCadastroDeCemitrios, mensagem, titulo, tipoMensagem);
 	}
 }

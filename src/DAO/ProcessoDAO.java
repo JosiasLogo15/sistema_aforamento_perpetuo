@@ -52,11 +52,7 @@ public class ProcessoDAO implements interfaceDAO<Processo>{
 		}catch (SQLException e) {
 			JOptionPane.showMessageDialog(null,"Ocorreu um erro ao salvar o registro: " + e);
 		}finally {
-			try {
-				conexao.fecharConexao(conn);
-			} catch (SQLException e2) {
-				//Escrever log no arquivo de log
-			}
+			fechaConexoes(conn, stmt, rs);
 		}
 		
 	}
@@ -89,11 +85,7 @@ public class ProcessoDAO implements interfaceDAO<Processo>{
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao atualizar o registro: " + e);
 		}finally {
-			try {
-				conexao.fecharConexao(conn);
-			} catch (SQLException e2) {
-				// Escrever log no arquivo de log
-			}
+			fechaConexoes(conn, stmt, rs);
 		}
 		
 	}
@@ -109,11 +101,7 @@ public class ProcessoDAO implements interfaceDAO<Processo>{
 		}catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao apagar o registro: " + e);
 		}finally {
-			try {
-				conexao.fecharConexao(conn);
-			} catch (SQLException e2) {
-				// Escrever log no arquivo de log
-			}
+			fechaConexoes(conn, stmt, rs);
 		}
 	}
 
@@ -146,11 +134,7 @@ public class ProcessoDAO implements interfaceDAO<Processo>{
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao fazer as buscas dos registros:" + e);
 		}finally {
-			try {
-				conexao.fecharConexao(conn);
-			} catch (SQLException e2) {
-				// Escrever log no arquivo de log
-			}
+			fechaConexoes(conn, stmt, rs);
 		}
 		return listaProcessos;
 	}
@@ -182,13 +166,19 @@ public class ProcessoDAO implements interfaceDAO<Processo>{
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null,"Ocorreu um erro ao fazer a busca do registro: " + e);
 		}finally {
-			try {
-				conexao.fecharConexao(conn);
-			} catch (SQLException e2) {
-				// Escrever log no arquivo de log
-			}
+			fechaConexoes(conn, stmt, rs);
 		}
 		return processo;
+	}
+	private void fechaConexoes(Connection conn, PreparedStatement stmt, ResultSet rs) {
+		try {
+			rs.close();
+			stmt.close();
+			conexao.fecharConexao(conn);
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
 	}
 
 }

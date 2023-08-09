@@ -26,6 +26,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.ImageIcon;
 
 public class TelaCadastroPrefeito {
 
@@ -68,7 +69,7 @@ public class TelaCadastroPrefeito {
 	private void initialize() {
 		frmCadastroPrefeito = new JFrame();
 		frmCadastroPrefeito.setTitle("Cadastro Prefeito");
-		frmCadastroPrefeito.setBounds(100, 100, 386, 410);
+		frmCadastroPrefeito.setBounds(100, 100, 403, 410);
 		frmCadastroPrefeito.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmCadastroPrefeito.getContentPane().setLayout(null);
 		
@@ -103,7 +104,7 @@ public class TelaCadastroPrefeito {
 		frmCadastroPrefeito.getContentPane().add(cldrFinal);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 223, 350, 137);
+		scrollPane.setBounds(10, 223, 367, 137);
 		frmCadastroPrefeito.getContentPane().add(scrollPane);
 		
 		table = new JTable();
@@ -139,6 +140,7 @@ public class TelaCadastroPrefeito {
 		scrollPane.setViewportView(table);
 		
 		JButton btnCadastrar = new JButton("Cadastrar");
+		btnCadastrar.setIcon(new ImageIcon(TelaCadastroPrefeito.class.getResource("/Style/ICONS/Save_icon.png")));
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dataInicio = cldrInicio.getDate();
@@ -146,25 +148,27 @@ public class TelaCadastroPrefeito {
 				controller.cadastrar();
 			}
 		});
-		btnCadastrar.setBounds(10, 185, 101, 23);
+		btnCadastrar.setBounds(10, 167, 116, 41);
 		frmCadastroPrefeito.getContentPane().add(btnCadastrar);
 		
 		JButton btnDeletar = new JButton("Deletar");
+		btnDeletar.setIcon(new ImageIcon(TelaCadastroPrefeito.class.getResource("/Style/ICONS/Erase_icon.png")));
 		btnDeletar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.excluir();
 			}
 		});
-		btnDeletar.setBounds(121, 185, 101, 23);
+		btnDeletar.setBounds(136, 167, 116, 41);
 		frmCadastroPrefeito.getContentPane().add(btnDeletar);
 		
 		JButton btnAlterar = new JButton("Alterar");
+		btnAlterar.setIcon(new ImageIcon(TelaCadastroPrefeito.class.getResource("/Style/ICONS/Update_icon.png")));
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.alterar();
 			}
 		});
-		btnAlterar.setBounds(232, 185, 101, 23);
+		btnAlterar.setBounds(268, 167, 109, 41);
 		frmCadastroPrefeito.getContentPane().add(btnAlterar);
 	}
 	

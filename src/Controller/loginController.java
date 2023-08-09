@@ -23,14 +23,16 @@ public class LoginController {
 		this.helper = new LoginHelper(view);
 	}
 	
-	public void login(String nome, String senha) {
+	public void login() {
 		Usuario usuario = helper.obterModelo();
 		
 		Boolean resultado = usuarioDAO.verificaNoBanco(usuario);
 		
 		if (resultado == true) {
 			TelaMenuPrincipal menu = new TelaMenuPrincipal();
+			menu.setUsuario(usuario.getNome());
 			menu.mostraTela();
+			menu.preencheInfo();
 			view.dispose();
 		}else {
 			view.exibeMensagem("Usuário ou senha inválidos!");

@@ -1,5 +1,7 @@
 package Controller;
 
+import javax.swing.JOptionPane;
+
 import Controller.Helper.CemiterioHelper;
 import DAO.CemiterioDAO;
 import Model.Cemiterio;
@@ -24,9 +26,13 @@ public class CemiterioController {
 			view.exibeMensagem("COMPLETE TODOS OS CAMPOS PARA CADASTRAR");
 		}
 		
-		helper.limpaTela();
+		limpaTela();
 		listaCemiterio();
 		
+	}
+	
+	public void limpaTela() {
+		helper.limpaTela();
 	}
 	
 	public void listaCemiterio() {
@@ -34,12 +40,19 @@ public class CemiterioController {
 	}
 
 	public void excluir() {
+		
 		int valorCapturado = helper.capturaValor();
 		Cemiterio cemiterio = cemiteroDAO.findById(valorCapturado);
-		cemiteroDAO.delete(cemiterio);
-		
-		view.exibeMensagem("Cemiterio deletado com sucesso");
-		listaCemiterio();
+		int opcao = view.mensagemConfirmacao("TEM CERTEZA QUE DESEJA FAZER A EXCLUSÃO DO REGISTRO "+ cemiterio.getNome(), "ATENTION", JOptionPane.YES_NO_OPTION);
+		if(opcao == JOptionPane.YES_OPTION) {
+			
+			cemiteroDAO.delete(cemiterio);
+			
+			view.exibeMensagem("Cemiterio deletado com sucesso");
+			listaCemiterio();
+		}else {
+			view.exibeMensagem("OPERAÇÃO CANCELADA COM SUCESSO");
+		}
 	}
 
 	public void preencheTela() {
@@ -51,11 +64,17 @@ public class CemiterioController {
 
 	public void alterar() {
 		Cemiterio cemiterio = helper.obterModelo();
-		cemiterio.setCodigoCemiterio(codigo); 
-		cemiteroDAO.update(cemiterio);
-			
-		helper.limpaTela();
-		listaCemiterio();
+		cemiterio.setCodigoCemiterio(helper.capturaValor());
+		int opcao = view.mensagemConfirmacao("TEM CERTEZA QUE DESEJA FAZER A EXCLUSÃO DO REGISTRO "+ cemiterio.getNome(), "ATENTION", JOptionPane.YES_NO_OPTION);
+		if(opcao == JOptionPane.YES_OPTION) {
+			cemiteroDAO.update(cemiterio);
+			helper.limpaTela();
+			listaCemiterio();
+		}else {
+			view.exibeMensagem("OPERAÇÃO CANCELADA COM SUCESSO!s");
+			helper.limpaTela();
+		}
+		
 	}
 	
 }

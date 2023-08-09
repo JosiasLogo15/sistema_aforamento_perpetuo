@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
 
 public class TelaLogin {
 
@@ -78,13 +79,14 @@ public class TelaLogin {
 		frmLogin.getContentPane().add(lblNewLabel_2);
 		
 		JButton btnEntrar = new JButton("ENTRAR");
+		btnEntrar.setIcon(new ImageIcon(TelaLogin.class.getResource("/Style/ICONS/Login_icon.png")));
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.login(txtNome.getText(), psswdSenha.getText().toString());
+				controller.login();
 			}
 		});
 		btnEntrar.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnEntrar.setBounds(113, 234, 124, 29);
+		btnEntrar.setBounds(108, 237, 151, 29);
 		frmLogin.getContentPane().add(btnEntrar);
 		
 		psswdSenha = new JPasswordField();

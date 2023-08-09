@@ -29,11 +29,7 @@ public class UsuarioDAO {
 		}catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao inserir o usuário: " + e);
 		}finally {
-			try {
-				conexao.fecharConexao(conn);
-			} catch (Exception e2) {
-				// Escrever log no arquivo de log
-			}
+			fechaConexoes(conn, stmt, rs);
 		}
 	}
 	
@@ -48,11 +44,7 @@ public class UsuarioDAO {
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao excluir o registro: " + e);
 		}finally {
-			try {
-				conexao.fecharConexao(conn);
-			} catch (SQLException e2) {
-				// Escrever log no arquivo de log
-			}
+			fechaConexoes(conn, stmt, rs);
 		}
 	}
 	
@@ -71,12 +63,18 @@ public class UsuarioDAO {
 		}catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro: " + e);
 		}finally {
-			try {
-				conexao.fecharConexao(conn);
-			} catch (SQLException e2) {
-				// Escrever log no arquivo de log
-			}
+			fechaConexoes(conn, stmt, rs);
 		}
 		return false;
+	}
+	private void fechaConexoes(Connection conn, PreparedStatement stmt, ResultSet rs) {
+		try {
+			rs.close();
+			stmt.close();
+			conexao.fecharConexao(conn);
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
 	}
 }

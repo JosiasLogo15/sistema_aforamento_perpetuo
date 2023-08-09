@@ -30,6 +30,7 @@ import javax.swing.border.TitledBorder;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.Window.Type;
+import javax.swing.ImageIcon;
 
 public class TelaEntradaProcesso {
 
@@ -215,6 +216,7 @@ public class TelaEntradaProcesso {
 			public void mouseClicked(MouseEvent e) {
 				if(e.getClickCount() == 2) {
 					controller.preencheTela();
+					txtNumeroProcesso.setEditable(false);
 				}
 			}
 		});
@@ -227,7 +229,7 @@ public class TelaEntradaProcesso {
 			}
 		) {
 			boolean[] columnEditables = new boolean[] {
-				false, false, false, false, false, false, false, true, false
+				false, false, false, false, false, false, false, false, false
 			};
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
@@ -239,39 +241,44 @@ public class TelaEntradaProcesso {
 		
 		
 		JButton btnCadastrar = new JButton("Cadastrar");
+		btnCadastrar.setIcon(new ImageIcon(TelaEntradaProcesso.class.getResource("/Style/ICONS/Save_icon.png")));
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.cadastrar();
 			}
 		});
-		btnCadastrar.setBounds(20, 168, 112, 28);
+		btnCadastrar.setBounds(10, 155, 138, 41);
 		frmEntradaProcesso.getContentPane().add(btnCadastrar);
 		
 		JButton btnAlterar = new JButton("Alterar");
+		btnAlterar.setIcon(new ImageIcon(TelaEntradaProcesso.class.getResource("/Style/ICONS/Update_icon.png")));
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.alterar();
+				txtNumeroProcesso.setEditable(true);
 			}
 		});
-		btnAlterar.setBounds(191, 168, 99, 28);
+		btnAlterar.setBounds(161, 155, 138, 41);
 		frmEntradaProcesso.getContentPane().add(btnAlterar);
 		
 		JButton btnDeletar = new JButton("Deletar");
+		btnDeletar.setIcon(new ImageIcon(TelaEntradaProcesso.class.getResource("/Style/ICONS/Erase_icon.png")));
 		btnDeletar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.excluir();
 			}
 		});
-		btnDeletar.setBounds(349, 168, 108, 28);
+		btnDeletar.setBounds(311, 155, 138, 41);
 		frmEntradaProcesso.getContentPane().add(btnDeletar);
 		
 		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar.setIcon(new ImageIcon(TelaEntradaProcesso.class.getResource("/Style/ICONS/Search_icon.png")));
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.buscar();
 			}
 		});
-		btnBuscar.setBounds(535, 168, 108, 28);
+		btnBuscar.setBounds(461, 155, 138, 41);
 		frmEntradaProcesso.getContentPane().add(btnBuscar);
 		cmbbxCemiterio.setToolTipText("");
 		cmbbxCemiterio.addActionListener(new ActionListener() {
@@ -299,6 +306,17 @@ public class TelaEntradaProcesso {
 		lblNewLabel_1_2_1_1_2_1_1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblNewLabel_1_2_1_1_2_1_1.setBounds(544, 129, 78, 14);
 		frmEntradaProcesso.getContentPane().add(lblNewLabel_1_2_1_1_2_1_1);
+		
+		JButton btnLimparCampo = new JButton("Limpar");
+		btnLimparCampo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.limpaTela();
+			}
+		});
+		btnLimparCampo.setToolTipText("Clique aqui para limpar os campos");
+		btnLimparCampo.setIcon(new ImageIcon(TelaEntradaProcesso.class.getResource("/Style/ICONS/eraser.png")));
+		btnLimparCampo.setBounds(609, 155, 123, 41);
+		frmEntradaProcesso.getContentPane().add(btnLimparCampo);
 	}
 
 	public JDateChooser getDataEntrada() {
