@@ -8,7 +8,7 @@ public class Conexao {
 	public Connection obterConexao() throws SQLException {
 		Connection conn = null;
 		
-		//conn = DriverManager.getConnection("jdbc:mysql://localhost/aforamento", "root", "root");
+		conn = DriverManager.getConnection("jdbc:mysql://localhost/aforamento", "root", "root");
 		return conn;
 	}
 	
