@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move element &apos;check_sign_icon.png&apos; to &apos;aforamento/src/Style.ICONS&apos;&#x0D;&#x0A;- Original project: &apos;aforamento&apos;&#x0D;&#x0A;- Destination element: &apos;aforamento/src/Style.ICONS&apos;&#x0D;&#x0A;- Original element: &apos;check_sign_icon.png&apos;&#x0D;&#x0A;- Update references to refactored element" description="Move file" destination="/src=/ignore_optional_problems=/true=/&lt;Style.ICONS" element1="src/Style/ICONS/lib/lib/check_sign_icon.png" files="1" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1693407365216" units="0" version="1.0"/>
+</session>

@@ -5,15 +5,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Conexao {
-	public Connection obterConexao() {
+	public Connection obterConexao() throws SQLException {
 		Connection conn = null;
 		
-		try {
-			conn = DriverManager.getConnection("jdbc:mysql://localhost/aforamento", "root", "root");
-			
-		}catch ( SQLException ex) {
-			System.out.println("Não conseguiu se conectar com o banco");
-		}
+		//conn = DriverManager.getConnection("jdbc:mysql://localhost/aforamento", "root", "root");
 		return conn;
 	}
 	

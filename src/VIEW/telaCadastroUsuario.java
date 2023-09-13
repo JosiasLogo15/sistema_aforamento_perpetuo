@@ -1,21 +1,18 @@
 package VIEW;
 
-import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
-import java.awt.Font;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import Controller.UsuarioController;
-
-import javax.swing.JPasswordField;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.ImageIcon;
 
 public class TelaCadastroUsuario {
 
@@ -23,21 +20,17 @@ public class TelaCadastroUsuario {
 	private JTextField txtNome;
 	private JPasswordField psswdSenha;
 	private UsuarioController controller;
+	
+	private boolean estadoMinimizado;
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaCadastroUsuario window = new TelaCadastroUsuario();
-					window.frmCadastroDeUsurio.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	/*
+	 * public static void main(String[] args) { EventQueue.invokeLater(new
+	 * Runnable() { public void run() { try { TelaCadastroUsuario window = new
+	 * TelaCadastroUsuario(); window.frmCadastroDeUsurio.setVisible(true); } catch
+	 * (Exception e) { e.printStackTrace(); } } }); }
+	 */
 
 	/**
 	 * Create the application.
@@ -52,6 +45,7 @@ public class TelaCadastroUsuario {
 	 */
 	private void initialize() {
 		frmCadastroDeUsurio = new JFrame();
+		frmCadastroDeUsurio.setResizable(false);
 		frmCadastroDeUsurio.setTitle("Cadastro de Usuário");
 		frmCadastroDeUsurio.setBounds(100, 100, 253, 256);
 		frmCadastroDeUsurio.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -104,6 +98,14 @@ public class TelaCadastroUsuario {
 
 	public void setTxtNome(JTextField txtNome) {
 		this.txtNome = txtNome;
+	}
+
+	public JFrame getFrmCadastroDeUsurio() {
+		return frmCadastroDeUsurio;
+	}
+
+	public void setFrmCadastroDeUsurio(JFrame frmCadastroDeUsurio) {
+		this.frmCadastroDeUsurio = frmCadastroDeUsurio;
 	}
 
 	public void mostraTela() {

@@ -8,7 +8,7 @@ public class Aforamento {
 	private Date dataAforamento;
 	private int numeroProcesso;
 	private int codigoPrefeito;
-	private String situacao;
+	private int situacao;
 	private String livro;
 	private String folha;
 	
@@ -43,10 +43,10 @@ public class Aforamento {
 	public void setCodigoPrefeito(int codigoPrefeito) {
 		this.codigoPrefeito = codigoPrefeito;
 	}
-	public String getSituacao() {
+	public int getSituacao() {
 		return situacao;
 	}
-	public void setSituacao(String situacao) {
+	public void setSituacao(int situacao) {
 		this.situacao = situacao;
 	}
 	public String getLivro() {

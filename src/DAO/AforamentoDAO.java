@@ -1,7 +1,6 @@
 package DAO;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,7 +11,6 @@ import javax.swing.JOptionPane;
 
 import Conexao.Conexao;
 import Model.Aforamento;
-import DAO.ProcessoDAO;
 
 public class AforamentoDAO implements interfaceDAO<Aforamento> {
 	
@@ -42,7 +40,7 @@ public class AforamentoDAO implements interfaceDAO<Aforamento> {
 			stmt.setDate(5, datasql);
 			stmt.setString(6, aforamento.getFolha());
 			stmt.setString(7, aforamento.getLivro());
-			stmt.setString(8, aforamento.getSituacao());
+			stmt.setInt(8, aforamento.getSituacao());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu um erro ao inserir o aforamento: " + e);
@@ -77,7 +75,7 @@ public class AforamentoDAO implements interfaceDAO<Aforamento> {
 			stmt.setDate(3, datasql);
 			stmt.setString(4, aforamento.getFolha());
 			stmt.setString(5, aforamento.getLivro());
-			stmt.setString(6, aforamento.getSituacao());
+			stmt.setInt(6, aforamento.getSituacao());
 			stmt.setInt(7, aforamento.getNumeroAforamento());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
@@ -123,7 +121,7 @@ public class AforamentoDAO implements interfaceDAO<Aforamento> {
 				aforamento.setNumeroProcesso(rs.getInt("numero_processo"));
 				aforamento.setFolha(rs.getString("folha"));
 				aforamento.setLivro(rs.getString("livro"));
-				aforamento.setSituacao(rs.getString("situacao"));
+				aforamento.setSituacao(rs.getInt("situacao"));
 				listaAforamento.add(aforamento);
 				
 			}
@@ -154,7 +152,7 @@ public class AforamentoDAO implements interfaceDAO<Aforamento> {
 			aforamento.setCodigoPrefeito(rs.getInt("codigo_prefeito"));
 			aforamento.setFolha(rs.getString("folha"));
 			aforamento.setLivro(rs.getString("livro"));
-			aforamento.setSituacao(rs.getString("situacao"));
+			aforamento.setSituacao(rs.getInt("situacao"));
 			}
 			
 		} catch (SQLException e) {

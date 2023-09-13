@@ -1,32 +1,28 @@
 package VIEW;
 
-import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Window.Type;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import java.awt.Font;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 import Controller.CemiterioController;
 
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.ListSelectionModel;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.ImageIcon;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.Window.Type;
-
 public class TelaCadastroCemiterio {
 
-	private JFrame frmCadastroDeCemitrios;
+	private JFrame frmCadastroDeCemiterios;
 	private JTextField txtNome;
 	private JTextField txtEndereco;
 	private JTextField txtBairro;
@@ -37,21 +33,17 @@ public class TelaCadastroCemiterio {
 	private JScrollPane scrollPane;
 	private CemiterioController controller;
 	private JButton btnLimpar;
+	
+	private boolean estadoMinimizado;
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaCadastroCemiterio window = new TelaCadastroCemiterio();
-					window.frmCadastroDeCemitrios.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	/*
+	 * public static void main(String[] args) { EventQueue.invokeLater(new
+	 * Runnable() { public void run() { try { TelaCadastroCemiterio window = new
+	 * TelaCadastroCemiterio(); window.frmCadastroDeCemitrios.setVisible(true); }
+	 * catch (Exception e) { e.printStackTrace(); } } }); }
+	 */
 
 	/**
 	 * Create the application.
@@ -66,46 +58,53 @@ public class TelaCadastroCemiterio {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmCadastroDeCemitrios = new JFrame();
-		frmCadastroDeCemitrios.setType(Type.POPUP);
-		frmCadastroDeCemitrios.setTitle("Cadastro de Cemitérios");
-		frmCadastroDeCemitrios.setBounds(100, 100, 552, 392);
-		frmCadastroDeCemitrios.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frmCadastroDeCemitrios.getContentPane().setLayout(null);
+		frmCadastroDeCemiterios = new JFrame();
+		frmCadastroDeCemiterios.setResizable(false);
+		/*
+		 * frmCadastroDeCemitrios.addWindowListener(new WindowAdapter() {
+		 * 
+		 * @Override public void windowIconified(WindowEvent e) { estadoMinimizado =
+		 * true; } });
+		 */
+		frmCadastroDeCemiterios.setType(Type.NORMAL);
+		frmCadastroDeCemiterios.setTitle("Cadastro de Cemitérios");
+		frmCadastroDeCemiterios.setBounds(100, 100, 552, 392);
+		frmCadastroDeCemiterios.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frmCadastroDeCemiterios.getContentPane().setLayout(null);
 		
 		JLabel lblNomeCemiterio = new JLabel("Nome:");
 		lblNomeCemiterio.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblNomeCemiterio.setBounds(10, 42, 52, 14);
-		frmCadastroDeCemitrios.getContentPane().add(lblNomeCemiterio);
+		frmCadastroDeCemiterios.getContentPane().add(lblNomeCemiterio);
 		
 		txtNome = new JTextField();
 		txtNome.setBounds(66, 41, 460, 20);
-		frmCadastroDeCemitrios.getContentPane().add(txtNome);
+		frmCadastroDeCemiterios.getContentPane().add(txtNome);
 		txtNome.setColumns(10);
 		
 		JLabel lblEndereco = new JLabel("Endereço:");
 		lblEndereco.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblEndereco.setBounds(10, 95, 70, 14);
-		frmCadastroDeCemitrios.getContentPane().add(lblEndereco);
+		frmCadastroDeCemiterios.getContentPane().add(lblEndereco);
 		
 		txtEndereco = new JTextField();
 		txtEndereco.setBounds(87, 94, 439, 20);
-		frmCadastroDeCemitrios.getContentPane().add(txtEndereco);
+		frmCadastroDeCemiterios.getContentPane().add(txtEndereco);
 		txtEndereco.setColumns(10);
 		
 		JLabel lblBairro = new JLabel("Bairro:");
 		lblBairro.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblBairro.setBounds(10, 149, 52, 14);
-		frmCadastroDeCemitrios.getContentPane().add(lblBairro);
+		frmCadastroDeCemiterios.getContentPane().add(lblBairro);
 		
 		txtBairro = new JTextField();
 		txtBairro.setBounds(66, 148, 460, 20);
-		frmCadastroDeCemitrios.getContentPane().add(txtBairro);
+		frmCadastroDeCemiterios.getContentPane().add(txtBairro);
 		txtBairro.setColumns(10);
 		
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 239, 522, 103);
-		frmCadastroDeCemitrios.getContentPane().add(scrollPane);
+		frmCadastroDeCemiterios.getContentPane().add(scrollPane);
 		
 		table = new JTable();
 		table.addMouseListener(new MouseAdapter() {
@@ -146,7 +145,7 @@ public class TelaCadastroCemiterio {
 			}
 		});
 		btnCadastrar.setBounds(10, 192, 123, 36);
-		frmCadastroDeCemitrios.getContentPane().add(btnCadastrar);
+		frmCadastroDeCemiterios.getContentPane().add(btnCadastrar);
 		
 		btnExcluir = new JButton("Excluir");
 		btnExcluir.setIcon(new ImageIcon(TelaCadastroCemiterio.class.getResource("/Style/ICONS/Erase_icon.png")));
@@ -156,7 +155,7 @@ public class TelaCadastroCemiterio {
 			}
 		});
 		btnExcluir.setBounds(143, 192, 123, 36);
-		frmCadastroDeCemitrios.getContentPane().add(btnExcluir);
+		frmCadastroDeCemiterios.getContentPane().add(btnExcluir);
 		
 		btnAlterar = new JButton("Alterar");
 		btnAlterar.setIcon(new ImageIcon(TelaCadastroCemiterio.class.getResource("/Style/ICONS/Update_icon.png")));
@@ -166,7 +165,7 @@ public class TelaCadastroCemiterio {
 			}
 		});
 		btnAlterar.setBounds(276, 192, 123, 36);
-		frmCadastroDeCemitrios.getContentPane().add(btnAlterar);
+		frmCadastroDeCemiterios.getContentPane().add(btnAlterar);
 		
 		btnLimpar = new JButton("Limpar");
 		btnLimpar.addActionListener(new ActionListener() {
@@ -176,7 +175,7 @@ public class TelaCadastroCemiterio {
 		});
 		btnLimpar.setIcon(new ImageIcon(TelaCadastroCemiterio.class.getResource("/Style/ICONS/eraser.png")));
 		btnLimpar.setBounds(409, 192, 117, 36);
-		frmCadastroDeCemitrios.getContentPane().add(btnLimpar);
+		frmCadastroDeCemiterios.getContentPane().add(btnLimpar);
 	}
 	
 	public JTable getTable() {
@@ -211,22 +210,26 @@ public class TelaCadastroCemiterio {
 		this.txtBairro = txtBairro;
 	}
 
+	public JFrame getFrmCadastroDeCemiterios() {
+		return frmCadastroDeCemiterios;
+	}
+
 	public void fechaTela() {
-		frmCadastroDeCemitrios.dispose();
+		frmCadastroDeCemiterios.dispose();
 	}
 	
 	public void mostraTela() {
-		frmCadastroDeCemitrios.setVisible(true);
+		frmCadastroDeCemiterios.setVisible(true);
 	}
 	
 	public void exibeMensagem(String Mensagem) {
-		JOptionPane.showMessageDialog(frmCadastroDeCemitrios, Mensagem);
+		JOptionPane.showMessageDialog(frmCadastroDeCemiterios, Mensagem);
 	}
 	public int mensagemConfirmacao(String mensagem, String titulo, int tipoMensagem) {
-		return JOptionPane.showConfirmDialog(frmCadastroDeCemitrios, mensagem, titulo, tipoMensagem);
+		return JOptionPane.showConfirmDialog(frmCadastroDeCemiterios, mensagem, titulo, tipoMensagem);
 	}
 	
 	public void errorMensagem(String mensagem, String titulo, int tipoMensagem) {
-		JOptionPane.showMessageDialog(frmCadastroDeCemitrios, mensagem, titulo, tipoMensagem);
+		JOptionPane.showMessageDialog(frmCadastroDeCemiterios, mensagem, titulo, tipoMensagem);
 	}
 }

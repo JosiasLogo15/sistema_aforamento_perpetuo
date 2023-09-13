@@ -1,36 +1,28 @@
 package VIEW;
 
-import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
-import java.awt.Font;
+import javax.swing.border.BevelBorder;
+import javax.swing.table.DefaultTableModel;
+
 import com.toedter.calendar.JDateChooser;
 
 import Controller.EntradaProcessoController;
-
-import javax.swing.JTable;
-import javax.swing.JButton;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.AbstractListModel;
-import javax.swing.JComboBox;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JScrollPane;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
-
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.TitledBorder;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.Window.Type;
-import javax.swing.ImageIcon;
 
 public class TelaEntradaProcesso {
 
@@ -54,18 +46,12 @@ public class TelaEntradaProcesso {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaEntradaProcesso window = new TelaEntradaProcesso();
-					window.frmEntradaProcesso.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	/*
+	 * public static void main(String[] args) { EventQueue.invokeLater(new
+	 * Runnable() { public void run() { try { TelaEntradaProcesso window = new
+	 * TelaEntradaProcesso(); window.frmEntradaProcesso.setVisible(true); } catch
+	 * (Exception e) { e.printStackTrace(); } } }); }
+	 */
 
 	/**
 	 * Create the application.
@@ -76,6 +62,7 @@ public class TelaEntradaProcesso {
 		controller.listaComboBox();
 		controller.listaProcessos();
 		controller.setarTableSorter();
+		controller.limpaTela();
 	}
 
 	/**
@@ -311,6 +298,7 @@ public class TelaEntradaProcesso {
 		btnLimparCampo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.limpaTela();
+				txtNumeroProcesso.setEditable(true);
 			}
 		});
 		btnLimparCampo.setToolTipText("Clique aqui para limpar os campos");
@@ -429,6 +417,14 @@ public class TelaEntradaProcesso {
 
 	public void setTxtBusca(JTextField txtBusca) {
 		this.txtBusca = txtBusca;
+	}
+
+	public JFrame getFrmEntradaProcesso() {
+		return frmEntradaProcesso;
+	}
+
+	public void setFrmEntradaProcesso(JFrame frmEntradaProcesso) {
+		this.frmEntradaProcesso = frmEntradaProcesso;
 	}
 
 	public void exibeMensage(String string) {

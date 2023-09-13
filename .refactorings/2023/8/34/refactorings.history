@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;Model.Status&apos; to &apos;Situacao&apos;&#x0D;&#x0A;- Original project: &apos;aforamento&apos;&#x0D;&#x0A;- Original element: &apos;Model.Status&apos;&#x0D;&#x0A;- Renamed element: &apos;Model.Situacao&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;Status&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src=/ignore_optional_problems=/true=/&lt;Model{Status.java[Status" matchStrategy="1" name="Situacao" qualified="false" references="true" similarDeclarations="false" stamp="1692890032640" textual="false" version="1.0"/>
+</session>

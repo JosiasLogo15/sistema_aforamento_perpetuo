@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
 
-import Model.Cemiterio;
 import Model.Prefeito;
 import VIEW.TelaCadastroPrefeito;
 

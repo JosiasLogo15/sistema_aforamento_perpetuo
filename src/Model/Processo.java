@@ -16,6 +16,7 @@ public class Processo {
 	private String rg;
 	private int codigoCemiterio;
 	private String nacionalidade;
+	private String numeroProcessoString;
 	
 	public int getNumeroProcesso() {
 		return numeroProcesso;
@@ -91,9 +92,16 @@ public class Processo {
 	}
 
 	
-	@Override
-	public String toString() {
-		return Integer.toString(numeroProcesso);
+	  public String getNumeroProcessoString() {
+		  this.numeroProcessoString = String.valueOf(numeroProcesso);
+		return numeroProcessoString;
 	}
+	
+	public String toString() { 
+		  return getNumeroProcessoString();
+	  }
+	  
+	  
+	 
 	
 }

@@ -7,7 +7,6 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import DAO.CemiterioDAO;
@@ -104,10 +103,6 @@ public class EntradaProcessoHelper {
 		view.getDataEntrada().setDate(null);
 		view.getTxtNacionalidade().setText("");
 		view.getCmbbxCemiterio().setSelectedItem(null);
-		
-		if(view.getTxtNumeroProcesso().isEditable() == false) {
-			view.getTxtNumeroProcesso().setEditable(true);
-		}
 	}
 
 	public int capturaValor() {

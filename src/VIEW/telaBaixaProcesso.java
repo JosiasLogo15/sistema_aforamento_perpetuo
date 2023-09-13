@@ -1,28 +1,33 @@
 package VIEW;
 
-import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
-import java.awt.Font;
-import javax.swing.JComboBox;
-import javax.swing.JTextField;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.border.BevelBorder;
+import javax.swing.table.DefaultTableModel;
+
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+
 import com.toedter.calendar.JDateChooser;
 
 import Controller.BaixaProcessoController;
-
-import javax.swing.JButton;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.ImageIcon;
 
 public class TelaBaixaProcesso {
 
@@ -36,21 +41,18 @@ public class TelaBaixaProcesso {
 	private JComboBox cmbbxProcesso = new JComboBox();
 	private JComboBox cmbbxPrefeito = new JComboBox();
 	private JTextArea txtObservacao = new JTextArea();
+	private JComboBox cmbbxSituacao = new JComboBox();
+	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private JLabel lblNomeRequerente = new JLabel("");
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaBaixaProcesso window = new TelaBaixaProcesso();
-					window.frmBaixaProcesso.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	/*
+	 * public static void main(String[] args) { EventQueue.invokeLater(new
+	 * Runnable() { public void run() { try { TelaBaixaProcesso window = new
+	 * TelaBaixaProcesso(); window.frmBaixaProcesso.setVisible(true); } catch
+	 * (Exception e) { e.printStackTrace(); } } }); }
+	 */
 
 	/**
 	 * Create the application.
@@ -61,8 +63,13 @@ public class TelaBaixaProcesso {
 		controller.listaCmbBoxProcessos();
 		controller.listaCmbBoxPrefeitos();
 		controller.listaAforamentos();
+		controller.listaSituacao();
 		controller.limpaTela();
 		controller.setarTableSorter();
+		//AutoCompleteDecorator.decorate(cmbbxProcesso);
+		AutoCompleteDecorator.decorate(cmbbxPrefeito);
+		AutoCompleteDecorator.decorate(cmbbxSituacao);
+
 	}
 
 	/**
@@ -70,30 +77,59 @@ public class TelaBaixaProcesso {
 	 */
 	private void initialize() {
 		frmBaixaProcesso = new JFrame();
+		frmBaixaProcesso.setResizable(false);
 		frmBaixaProcesso.setTitle("Baixa Processo");
-		frmBaixaProcesso.setBounds(100, 100, 528, 548);
+		frmBaixaProcesso.setBounds(100, 100, 546, 573);
 		frmBaixaProcesso.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmBaixaProcesso.getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Nº Processo");
-		lblNewLabel.setBounds(10, 39, 85, 14);
+		lblNewLabel.setBounds(10, 13, 85, 14);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
 		frmBaixaProcesso.getContentPane().add(lblNewLabel);
+		
+		
+		
+		  cmbbxProcesso.addItemListener(new ItemListener() {
+		  
+			  public void itemStateChanged(ItemEvent e) {
+				  if(cmbbxProcesso.getSelectedItem() != null) { controller.mostraNome(); } }
+		  });
+		 
+		  
+		
+		cmbbxProcesso.setEditable(true);
+		
+		JButton btnNewButton = new JButton("");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.buscaProcesso(cmbbxProcesso);
+			}
+		});
+		btnNewButton.setIcon(new ImageIcon(TelaBaixaProcesso.class.getResource("/Style/ICONS/loupe_icon_16px.png")));
+		btnNewButton.setBounds(191, 11, 24, 23);
+		frmBaixaProcesso.getContentPane().add(btnNewButton);
+		
 		cmbbxProcesso.setToolTipText("Selecione o Nº de Processo");
-		cmbbxProcesso.setBounds(102, 37, 85, 22);
+		cmbbxProcesso.setBounds(102, 11, 85, 22);
 		frmBaixaProcesso.getContentPane().add(cmbbxProcesso);
+		lblNomeRequerente.setFont(new Font("Tahoma", Font.BOLD, 10));
+		
+		
+		lblNomeRequerente.setBounds(10, 38, 205, 14);
+		frmBaixaProcesso.getContentPane().add(lblNomeRequerente);
 		
 		JLabel lblNewLabel_1 = new JLabel("Nº Aforamento");
-		lblNewLabel_1.setBounds(246, 42, 106, 14);
+		lblNewLabel_1.setBounds(246, 16, 106, 14);
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		frmBaixaProcesso.getContentPane().add(lblNewLabel_1);
 		
 		txtAforamento = new JTextField();
 		txtAforamento.setToolTipText("Digite o Nº de Aforamento");
-		txtAforamento.setBounds(361, 39, 97, 20);
+		txtAforamento.setBounds(361, 13, 97, 20);
 		frmBaixaProcesso.getContentPane().add(txtAforamento);
 		txtAforamento.setColumns(10);
-		txtObservacao.setBounds(10, 104, 217, 101);
+		txtObservacao.setBounds(10, 104, 217, 136);
 		txtObservacao.setLineWrap(true);
 		txtObservacao.setColumns(1);
 		frmBaixaProcesso.getContentPane().add(txtObservacao);
@@ -104,48 +140,51 @@ public class TelaBaixaProcesso {
 		frmBaixaProcesso.getContentPane().add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Data do Aforamento");
-		lblNewLabel_1_1.setBounds(246, 82, 141, 14);
+		lblNewLabel_1_1.setBounds(231, 47, 141, 14);
 		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		frmBaixaProcesso.getContentPane().add(lblNewLabel_1_1);
 		dataAforamento.setToolTipText("Digite ou selecione a data do Aforamento");
 		dataAforamento.setDateFormatString("dd'/'MM'/'y");
-		dataAforamento.setBounds(392, 80, 108, 20);
+		dataAforamento.setBounds(382, 41, 108, 20);
 		frmBaixaProcesso.getContentPane().add(dataAforamento);
 		
-		JLabel lblNewLabel_3 = new JLabel("Nome do Prefeito");
-		lblNewLabel_3.setBounds(246, 129, 121, 14);
+		JLabel lblNewLabel_3 = new JLabel("Prefeito");
+		lblNewLabel_3.setBounds(246, 81, 58, 14);
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 14));
 		frmBaixaProcesso.getContentPane().add(lblNewLabel_3);
+		cmbbxPrefeito.setMaximumRowCount(5);
+		cmbbxPrefeito.setEditable(true);
 		cmbbxPrefeito.setToolTipText("Selecione o Prefeito");
-		cmbbxPrefeito.setBounds(373, 127, 127, 22);
+		cmbbxPrefeito.setBounds(314, 79, 127, 22);
 		frmBaixaProcesso.getContentPane().add(cmbbxPrefeito);
 		
+		
 		JLabel lblNewLabel_3_1 = new JLabel("Livro");
-		lblNewLabel_3_1.setBounds(246, 165, 34, 14);
+		lblNewLabel_3_1.setBounds(246, 123, 34, 14);
 		lblNewLabel_3_1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		frmBaixaProcesso.getContentPane().add(lblNewLabel_3_1);
 		
 		txtLivro = new JTextField();
 		txtLivro.setToolTipText("Digite o Livro do Aforamento");
-		txtLivro.setBounds(290, 164, 86, 20);
+		txtLivro.setBounds(290, 122, 86, 20);
 		txtLivro.setColumns(10);
 		frmBaixaProcesso.getContentPane().add(txtLivro);
 		
 		JLabel lblNewLabel_3_1_1 = new JLabel("Folha");
-		lblNewLabel_3_1_1.setBounds(246, 191, 37, 14);
+		lblNewLabel_3_1_1.setBounds(246, 168, 37, 14);
 		lblNewLabel_3_1_1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		frmBaixaProcesso.getContentPane().add(lblNewLabel_3_1_1);
 		
 		txtFolha = new JTextField();
 		txtFolha.setToolTipText("Digite a Folha do Aforamento");
-		txtFolha.setBounds(290, 190, 86, 20);
+		txtFolha.setBounds(290, 167, 86, 20);
 		txtFolha.setColumns(10);
 		frmBaixaProcesso.getContentPane().add(txtFolha);
 		
 		JButton btnBaixa = new JButton("Baixa");
 		btnBaixa.setToolTipText("Clique aqui para dar baixa no Processo de Aforamento");
 		btnBaixa.setIcon(new ImageIcon(TelaBaixaProcesso.class.getResource("/Style/ICONS/Save_icon.png")));
-		btnBaixa.setBounds(10, 226, 121, 35);
+		btnBaixa.setBounds(10, 251, 121, 35);
 		btnBaixa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.baixaProcesso();
@@ -161,7 +200,7 @@ public class TelaBaixaProcesso {
 				controller.atualizar();
 			}
 		});
-		btnAlterar.setBounds(141, 226, 106, 35);
+		btnAlterar.setBounds(141, 251, 106, 35);
 		frmBaixaProcesso.getContentPane().add(btnAlterar);
 		
 		JButton btnExcluir = new JButton("Excluir");
@@ -172,11 +211,12 @@ public class TelaBaixaProcesso {
 				controller.excluir();
 			}
 		});
-		btnExcluir.setBounds(256, 226, 116, 35);
+		btnExcluir.setBounds(256, 251, 116, 35);
 		frmBaixaProcesso.getContentPane().add(btnExcluir);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 266, 490, 232);
+		scrollPane.setViewportBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		scrollPane.setBounds(10, 291, 510, 232);
 		frmBaixaProcesso.getContentPane().add(scrollPane);
 		
 		table = new JTable();
@@ -205,15 +245,31 @@ public class TelaBaixaProcesso {
 			}
 		});
 		
+		JRadioButton rdbtnImprimirComLogo = new JRadioButton("Imprimir com Logo");
+		buttonGroup.add(rdbtnImprimirComLogo);
+		rdbtnImprimirComLogo.setSelected(true);
+		rdbtnImprimirComLogo.setBounds(391, 121, 129, 23);
+		frmBaixaProcesso.getContentPane().add(rdbtnImprimirComLogo);
+		
+		JRadioButton rdbtnImprimirSemLogo = new JRadioButton("Imprimir sem Logo");
+		buttonGroup.add(rdbtnImprimirSemLogo);
+		rdbtnImprimirSemLogo.setBounds(391, 166, 129, 23);
+		frmBaixaProcesso.getContentPane().add(rdbtnImprimirSemLogo);
+		
 		JButton btnImprimir = new JButton("");
 		btnImprimir.setToolTipText("Clique aqui para imprimir o aforamento");
 		btnImprimir.setIcon(new ImageIcon(TelaBaixaProcesso.class.getResource("/Style/ICONS/Scan_icon.png")));
 		btnImprimir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.imprimir();
+				if(rdbtnImprimirComLogo.isSelected()) {
+					controller.imprimirComLogo();
+				}else {
+					controller.imprimirSemLogo();
+				}
+				controller.limpaTela();
 			}
 		});
-		btnImprimir.setBounds(417, 176, 56, 29);
+		btnImprimir.setBounds(424, 196, 56, 29);
 		frmBaixaProcesso.getContentPane().add(btnImprimir);
 		
 		JButton btnLimpar = new JButton("Limpar");
@@ -224,8 +280,20 @@ public class TelaBaixaProcesso {
 		});
 		btnLimpar.setIcon(new ImageIcon(TelaBaixaProcesso.class.getResource("/Style/ICONS/eraser.png")));
 		btnLimpar.setToolTipText("Clique aqui para Excluir o aforamento selecionado");
-		btnLimpar.setBounds(384, 226, 116, 35);
+		btnLimpar.setBounds(384, 251, 116, 35);
 		frmBaixaProcesso.getContentPane().add(btnLimpar);
+		
+		JLabel lblNewLabel_3_1_1_1 = new JLabel("Situação");
+		lblNewLabel_3_1_1_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_3_1_1_1.setBounds(246, 205, 64, 14);
+		frmBaixaProcesso.getContentPane().add(lblNewLabel_3_1_1_1);
+		cmbbxSituacao.setMaximumRowCount(5);
+		cmbbxSituacao.setEditable(true);
+		cmbbxSituacao.setToolTipText("Selecione a situação de pagamento");
+		cmbbxSituacao.setBounds(309, 203, 88, 22);
+		frmBaixaProcesso.getContentPane().add(cmbbxSituacao);
+		
+		
 	}
 
 	public JTextField getTxtAforamento() {
@@ -290,6 +358,30 @@ public class TelaBaixaProcesso {
 
 	public void setTxtObservacao(JTextArea txtObservacao) {
 		this.txtObservacao = txtObservacao;
+	}
+
+	public JFrame getFrmBaixaProcesso() {
+		return frmBaixaProcesso;
+	}
+
+	public void setFrmBaixaProcesso(JFrame frmBaixaProcesso) {
+		this.frmBaixaProcesso = frmBaixaProcesso;
+	}
+
+	public JComboBox getCmbbxSituacao() {
+		return cmbbxSituacao;
+	}
+
+	public void setCmbbxSituacao(JComboBox cmbbxSituacao) {
+		this.cmbbxSituacao = cmbbxSituacao;
+	}
+
+	public JLabel getLblNomeRequerente() {
+		return lblNomeRequerente;
+	}
+
+	public void setLblNomeRequerente(JLabel lblNomeRequerente) {
+		this.lblNomeRequerente = lblNomeRequerente;
 	}
 
 	public void mostraTela() {

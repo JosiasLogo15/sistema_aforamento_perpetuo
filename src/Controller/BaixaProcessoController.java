@@ -1,8 +1,10 @@
 package Controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
 
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 import Controller.Helper.BaixaProcessoHelper;
@@ -10,11 +12,15 @@ import DAO.AforamentoDAO;
 import DAO.CemiterioDAO;
 import DAO.PrefeitoDAO;
 import DAO.ProcessoDAO;
+import DAO.SituacaoDAO;
 import Model.Aforamento;
 import Model.Cemiterio;
 import Model.Prefeito;
 import Model.Processo;
+import Model.Situacao;
 import VIEW.TelaBaixaProcesso;
+import VIEW.TelaBuscaProcesso;
+
 
 public class BaixaProcessoController {
 	private final TelaBaixaProcesso view;
@@ -22,6 +28,7 @@ public class BaixaProcessoController {
 	private final ProcessoDAO processoDAO;
 	private final AforamentoDAO aforamentoDAO;
 	private final CemiterioDAO cemiterioDAO;
+	private final SituacaoDAO situacaoDAO;
 	private PrefeitoDAO prefeitoDAO;
 	
 	
@@ -36,6 +43,7 @@ public class BaixaProcessoController {
 		this.prefeitoDAO = new PrefeitoDAO();
 		this.aforamentoDAO = new AforamentoDAO();
 		this.cemiterioDAO = new CemiterioDAO();
+		this.situacaoDAO = new SituacaoDAO();
 	}
 
 	public void baixaProcesso() {
@@ -51,20 +59,39 @@ public class BaixaProcessoController {
 	}
 
 	public void listaCmbBoxPrefeitos() {
-		helper.listaCmbBoxPrefeitos(prefeitoDAO.findAll());
+		try {
+			helper.listaCmbBoxPrefeitos(prefeitoDAO.findAll());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void listaAforamentos() {
-		helper.listaAforamentos(aforamentoDAO.findAll());
+		try {
+			helper.listaAforamentos(aforamentoDAO.findAll());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void preencheTela() {
 		int codigo = helper.obterCodigo();
-		aforamento = aforamentoDAO.findById(codigo);
-		Prefeito prefeito = prefeitoDAO.findById(aforamento.getCodigoPrefeito()); 
-		Processo processo = processoDAO.findById(aforamento.getNumeroProcesso());
 		
-		helper.preencheTela(aforamento, prefeito, processo);
+		try {
+			aforamento = aforamentoDAO.findById(codigo);
+			Prefeito prefeito = prefeitoDAO.findById(aforamento.getCodigoPrefeito()); 
+			Processo processo = processoDAO.findById(aforamento.getNumeroProcesso());
+			Situacao situacao = situacaoDAO.findById(aforamento.getSituacao());
+			
+			helper.preencheTela(aforamento, prefeito, processo, situacao);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		
 	}
 
@@ -76,6 +103,7 @@ public class BaixaProcessoController {
 		if(opcao == JOptionPane.YES_OPTION) {
 		aforamentoDAO.update(aforamento);
 		limpaTela();
+		listaAforamentos();
 		view.exibeMensagem("Registro atualizado com sucesso");
 		
 		}else {
@@ -112,24 +140,63 @@ public class BaixaProcessoController {
 		helper.setarTableSorter();
 	}
 
-	public void imprimir(){
-		if(helper.camposVazios()) {
-			view.errorMensagem("SELECIONE UM PROCESSO PARA A IMPRESSÃO", "ATENTION", JOptionPane.WARNING_MESSAGE);
-		}else {
-			aforamento = helper.obterModelo();
+	public void imprimirComLogo(){
+		try {
+			int codigo = helper.obterCodigo();
+			aforamento = aforamentoDAO.findById(codigo);
 			processo = processoDAO.findById(aforamento.getNumeroProcesso());
 			Cemiterio cemiterio = cemiterioDAO.findById(processo.getCodigoCemiterio());
 			Prefeito prefeito = prefeitoDAO.findById(aforamento.getCodigoPrefeito());
-			helper.escreveDocumento(aforamento, processo, cemiterio, prefeito);
-		try {
-			TimeUnit.SECONDS.sleep(10);
+			helper.escreveDocumentoComLogo(aforamento, processo, cemiterio, prefeito);
+			
+			  
+			TimeUnit.SECONDS.sleep(30); 
+				  
+				
 			helper.limpaArquivo();
-		} catch (InterruptedException | IOException e) {
+		}catch (IOException e) {
+			
+			e.printStackTrace();
+		} catch (SQLException e) {
 			view.errorMensagem("Ocorreu um erro ao imprimir o arquivo", "ERROR", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
+		} catch (InterruptedException e) {
+
+			e.printStackTrace();
 		}
-		}
+			 
 	}
+	
+	public void imprimirSemLogo(){
+		/*
+		 * if(helper.camposVazios()) {
+		 * view.errorMensagem("SELECIONE UM PROCESSO PARA A IMPRESSÃO", "ATENTION",
+		 * JOptionPane.WARNING_MESSAGE); }else {
+		 */
+		try {
+			int codigo = helper.obterCodigo();
+			aforamento = aforamentoDAO.findById(codigo);
+			processo = processoDAO.findById(aforamento.getNumeroProcesso());
+			Cemiterio cemiterio = cemiterioDAO.findById(processo.getCodigoCemiterio());
+			Prefeito prefeito = prefeitoDAO.findById(aforamento.getCodigoPrefeito());
+			helper.escreveDocumentoSemLogo(aforamento, processo, cemiterio, prefeito);
+			
+			  try { 
+				  TimeUnit.SECONDS.sleep(30); 
+				  } catch (InterruptedException e) { 
+					  e.printStackTrace(); 
+				}
+			  
+			helper.limpaArquivo(); 
+			  } catch (IOException e) {
+				  view.errorMensagem("Ocorreu um erro ao escrever o arquivo", "ERROR", JOptionPane.ERROR_MESSAGE); 
+				  e.printStackTrace(); 
+			  } catch (SQLException e) {
+				view.errorMensagem("Ocorreu um erro ao imprimir o arquivo", "ERROR", JOptionPane.ERROR_MESSAGE); 
+				e.printStackTrace();
+			}
+		}	 
+	
 	
 	private boolean camposVazios(Aforamento aforamento) {
 		if(aforamento.getNumeroAforamento() == 0 || aforamento.getCodigoPrefeito() == 0 || 
@@ -140,12 +207,32 @@ public class BaixaProcessoController {
 		return false;
 	}
 
-	public void limpaArquivo() {
+	private void limpaArquivo() {
 		try {
 			helper.limpaArquivo();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+
+	public void listaSituacao() {
+		try {
+			helper.listaSituacao(situacaoDAO.findAll());
+		} catch (SQLException e) {
+			view.errorMensagem("Houve um erro em buscar a situacao", "Erro", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
+	}
+
+	public void buscaProcesso(JComboBox cmbbxProcesso) {
+		TelaBuscaProcesso telaBuscaProcesso = new TelaBuscaProcesso(cmbbxProcesso);
+		telaBuscaProcesso.setLocationRelativeTo(view.getFrmBaixaProcesso());
+		telaBuscaProcesso.mostraTela();
+	}
+
+	public void mostraNome() {
+			helper.mostraNome();
+
+	}
+
 }

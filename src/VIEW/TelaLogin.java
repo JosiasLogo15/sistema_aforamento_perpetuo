@@ -1,21 +1,21 @@
 package VIEW;
 
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
-import java.awt.Font;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import Controller.LoginController;
+import com.formdev.flatlaf.IntelliJTheme;
 
-import javax.swing.JButton;
-import javax.swing.JPasswordField;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.ImageIcon;
+import Controller.LoginController;
 
 public class TelaLogin {
 
@@ -28,6 +28,13 @@ public class TelaLogin {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		try {
+		    //UIManager.setLookAndFeel( new FlatLightLaf() );
+			//FlatArcIJTheme.setup();
+			IntelliJTheme.setup( TelaLogin.class.getResourceAsStream( "/arc-theme.theme.json" ) );
+		} catch( Exception ex ) {
+		    ex.printStackTrace();
+		}
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -36,6 +43,7 @@ public class TelaLogin {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+				
 			}
 		});
 	}
@@ -53,6 +61,7 @@ public class TelaLogin {
 	 */
 	private void initialize() {
 		frmLogin = new JFrame();
+		frmLogin.setResizable(false);
 		frmLogin.setTitle("LOGIN");
 		frmLogin.setBounds(100, 100, 369, 347);
 		frmLogin.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

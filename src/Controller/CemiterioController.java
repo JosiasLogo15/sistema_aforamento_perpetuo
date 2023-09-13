@@ -49,9 +49,11 @@ public class CemiterioController {
 			cemiteroDAO.delete(cemiterio);
 			
 			view.exibeMensagem("Cemiterio deletado com sucesso");
+			limpaTela();
 			listaCemiterio();
 		}else {
 			view.exibeMensagem("OPERAÇÃO CANCELADA COM SUCESSO");
+			limpaTela();
 		}
 	}
 
@@ -65,7 +67,7 @@ public class CemiterioController {
 	public void alterar() {
 		Cemiterio cemiterio = helper.obterModelo();
 		cemiterio.setCodigoCemiterio(helper.capturaValor());
-		int opcao = view.mensagemConfirmacao("TEM CERTEZA QUE DESEJA FAZER A EXCLUSÃO DO REGISTRO "+ cemiterio.getNome(), "ATENTION", JOptionPane.YES_NO_OPTION);
+		int opcao = view.mensagemConfirmacao("TEM CERTEZA QUE DESEJA ALTERAR O REGISTRO "+ cemiterio.getNome(), "ATENTION", JOptionPane.YES_NO_OPTION);
 		if(opcao == JOptionPane.YES_OPTION) {
 			cemiteroDAO.update(cemiterio);
 			helper.limpaTela();
@@ -76,5 +78,6 @@ public class CemiterioController {
 		}
 		
 	}
+
 	
 }

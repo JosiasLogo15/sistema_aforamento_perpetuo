@@ -1,5 +1,9 @@
 package Controller;
 
+import java.sql.SQLException;
+
+import javax.swing.JOptionPane;
+
 import Controller.Helper.PrefeitoHelper;
 import DAO.PrefeitoDAO;
 import Model.Prefeito;
@@ -9,7 +13,6 @@ public class PrefeitoController {
 	private final TelaCadastroPrefeito view;
 	private PrefeitoHelper helper;
 	private PrefeitoDAO prefeitoDAO;
-	private int codigo;
 	
 	
 	public PrefeitoController(TelaCadastroPrefeito view) {
@@ -21,39 +24,76 @@ public class PrefeitoController {
 	public void cadastrar() {
 		Prefeito prefeito = helper.obterModelo();
 		
-		prefeitoDAO.save(prefeito);
+		try {
+			prefeitoDAO.save(prefeito);
+			
+			listaPrefeitos();
+			
+			helper.limpaTela();
+			
+			view.exibeMensagem("Prefeito cadastrado com sucesso!");
+		} catch (SQLException e) {
+			view.errorMensagem("Ocorreu um erro ao cadastrar o Prefeito", "Erro", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
 		
-		listaPrefeitos();
-		view.exibeMensagem("Prefeito cadastrado com sucesso!");
+		
 	}
 	
 	public void listaPrefeitos() {
-		helper.listaPrefeitos(prefeitoDAO.findAll());
+		try {
+			helper.listaPrefeitos(prefeitoDAO.findAll());
+		} catch (SQLException e) {
+			view.errorMensagem("Ocorreu um erro ao listar os Prefeitos", "Error", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
 	}
 
 	public void excluir() {
+		Prefeito prefeito;
+		try {
 		int codigo = helper.capturaValor();
-		Prefeito prefeito = prefeitoDAO.findById(codigo);
+		prefeito = prefeitoDAO.findById(codigo);
 		prefeitoDAO.delete(prefeito);
 		listaPrefeitos();
+		helper.limpaTela();
 		view.exibeMensagem("Registro excluido com sucesso!");
+		}catch (SQLException e) {
+			view.errorMensagem("Ocorreu um erro ao realizar a exclusão do Registro: ", "Erro de Exclusão", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
 	}
 
 	
 	public void preencheTela() {
-		this.codigo = helper.capturaValor();
-		Prefeito prefeito = prefeitoDAO.findById(codigo);
-		helper.preencheTela(prefeito);
+		int codigo = helper.capturaValor();
+		Prefeito prefeito;
+		try {
+			prefeito = prefeitoDAO.findById(codigo);
+			helper.preencheTela(prefeito);
+		} catch (SQLException e) {
+			view.errorMensagem("Ocorreu um erro "+ e, "Warning", JOptionPane.INFORMATION_MESSAGE);
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public void alterar() {
-		Prefeito prefeito = helper.obterModelo();
-		prefeito.setCodigoPrefeito(codigo);
-		prefeitoDAO.update(prefeito);
+		try {
+			int codigo = helper.capturaValor();
+			Prefeito prefeito = helper.obterModelo();
+			prefeito.setCodigoPrefeito(codigo);
+			
+			prefeitoDAO.update(prefeito);
+			helper.limpaTela();
+			view.exibeMensagem("Registro alterado com sucesso!");
+			listaPrefeitos();
+		} catch (SQLException e) {
+			view.errorMensagem("Ocorreu um erro ao alterar o registro ", "Erro de alteração", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
 		
-		helper.limpaTela();
-		view.exibeMensagem("Registro alterado com sucesso!");
-		listaPrefeitos();
+		
 	}
 	
 	

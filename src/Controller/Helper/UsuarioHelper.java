@@ -1,6 +1,5 @@
 package Controller.Helper;
 
-import Controller.UsuarioController;
 import Model.Usuario;
 import VIEW.TelaCadastroUsuario;
 

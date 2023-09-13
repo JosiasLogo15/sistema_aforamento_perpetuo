@@ -1,32 +1,27 @@
 package VIEW;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import com.toedter.calendar.JYearChooser;
-import com.toedter.calendar.JCalendar;
-import com.toedter.components.JLocaleChooser;
-
-import Controller.PrefeitoController;
-
-import com.toedter.calendar.JMonthChooser;
-import com.toedter.calendar.JDayChooser;
-import com.toedter.calendar.JDateChooser;
-import java.awt.event.ActionListener;
-import java.util.Date;
-import java.awt.event.ActionEvent;
 import java.awt.Font;
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.JButton;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.Date;
+
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+
+import com.toedter.calendar.JDateChooser;
+
+import Controller.PrefeitoController;
 
 public class TelaCadastroPrefeito {
 
@@ -38,21 +33,17 @@ public class TelaCadastroPrefeito {
 	private Date dataFinal;
 	private JDateChooser cldrInicio = new JDateChooser();
 	private JDateChooser cldrFinal = new JDateChooser();
+	
+	private boolean estadoMinimizado;
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaCadastroPrefeito window = new TelaCadastroPrefeito();
-					window.frmCadastroPrefeito.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	/*
+	 * public static void main(String[] args) { EventQueue.invokeLater(new
+	 * Runnable() { public void run() { try { TelaCadastroPrefeito window = new
+	 * TelaCadastroPrefeito(); window.frmCadastroPrefeito.setVisible(true); } catch
+	 * (Exception e) { e.printStackTrace(); } } }); }
+	 */
 
 	/**
 	 * Create the application.
@@ -68,6 +59,13 @@ public class TelaCadastroPrefeito {
 	 */
 	private void initialize() {
 		frmCadastroPrefeito = new JFrame();
+		frmCadastroPrefeito.setResizable(false);
+		frmCadastroPrefeito.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowIconified(WindowEvent e) {
+				estadoMinimizado = true;
+			}
+		});
 		frmCadastroPrefeito.setTitle("Cadastro Prefeito");
 		frmCadastroPrefeito.setBounds(100, 100, 403, 410);
 		frmCadastroPrefeito.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -221,6 +219,14 @@ public class TelaCadastroPrefeito {
 		this.cldrFinal = cldrFinal;
 	}
 
+	public JFrame getFrmCadastroPrefeito() {
+		return frmCadastroPrefeito;
+	}
+
+	public void setFrmCadastroPrefeito(JFrame frmCadastroPrefeito) {
+		this.frmCadastroPrefeito = frmCadastroPrefeito;
+	}
+
 	public void mostraTela() {
 		frmCadastroPrefeito.setVisible(true);
 		
@@ -232,5 +238,9 @@ public class TelaCadastroPrefeito {
 
 	public void exibeMensagem(String string) {
 		JOptionPane.showMessageDialog(frmCadastroPrefeito, string);
+	}
+	
+	public void errorMensagem(String mensagem, String titulo, int tipoMensagem) {
+		JOptionPane.showMessageDialog(frmCadastroPrefeito, mensagem, titulo, tipoMensagem);
 	}
 }
